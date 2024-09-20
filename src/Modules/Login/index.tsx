@@ -1,9 +1,10 @@
 import React from 'react';
+import { Header } from '../../Core/Components';
 
 export const Login: React.FC = () => {
   return (
     <div>
-      <h1>Login Page</h1>
+      <h1>LTU MAMA ME LO CHUPA RICO</h1>
       <form>
         <label>
           Username:
