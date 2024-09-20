@@ -4,11 +4,12 @@ import './StyleHeader.css'
 import Logo from '../../../assets/logo_udes.png'
 import  { Col, Row,Flex,Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
-const navigate= useNavigate();
-const handlenavigation=()=> {
+
+export const Header = () => {
+  const navigate= useNavigate();
+  const handlenavigation=()=> {
   navigate('../../../Modules/PrincipalModules/index')
 }
-export const Header = () => {
   return (
     <div className='container'>
       <img src={Logo} alt="Logo udes" className="LogoUdes" />
