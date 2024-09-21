@@ -14,7 +14,7 @@ export const Header = () => {
   }
   
   return (
-    /*<div className='container'>*/
+    
       <Row className='container'>
         <Col>
           <img src={Logo} alt="Logo udes" className="LogoUdes" />
@@ -22,7 +22,7 @@ export const Header = () => {
        
         
           <Row className='navBar' >
-            <Col className='EspacioIzquuierdo'>
+            <Col className='EspacioIzquierdo'>
             <Col><Button className='BotonHome' onClick={handleNavigation}><HomeFilled className='iconHome' /></Button></Col>
             <Col>Tramites academicos</Col>
             <Col>Record de notas</Col>
@@ -40,6 +40,6 @@ export const Header = () => {
           </Row>
           
       </Row>
-    //</div>
+    
   );
 }

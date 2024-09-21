@@ -30,9 +30,6 @@
   margin-left: 10px;
 }
 
-Col{
-  column-span: 1.5;
-}
 .container {
   display: flex;
   flex-direction: column; /* Colocar todo en columna */
@@ -42,9 +39,9 @@ Col{
 
  
 }
-.EspacioIzquuierdo{ 
+.EspacioIzquierdo{ 
   display: flex; 
-  justify-content: space-between; 
+ 
   padding: 3px; 
   justify-content: center; 
   align-items: center; 
@@ -52,11 +49,14 @@ Col{
 }
 .EspacioDerecho{
   display: flex;
-  justify-content: space-between;
+
   justify-content: center; 
   align-items: center; 
   gap: 1.5rem;
   padding: 3px; 
 }
 
+.EspacioDerecho Col , .EspacioIzquierdo Col{
+  column-span: 1.5;
+}
 
