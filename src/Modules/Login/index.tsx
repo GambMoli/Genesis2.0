@@ -4,6 +4,7 @@ import { Header } from '../../Core/Components';
 export const Login: React.FC = () => {
   return (
     <div>
+      <Header></Header>
       <h1>LTU MAMA ME LO CHUPA RICO</h1>
       <form>
         <label>
