@@ -4,13 +4,14 @@ import { ReadOutlined, MessageOutlined, ProductOutlined, BookOutlined, MedicineB
 import './StylePrincipalPage.css';
 import { BotonesModulos } from '../../Core/Components/BotonesModulos';
 import { TablaInformacion } from '../../Core/Components/TablaPrincipalPage';
+import { Footer } from '../../Core/Components';
 
 const { Paragraph } = Typography;
 export const Home: React.FC = () => {
   return (
-
-    <div className='MainContainer'>
-      <Row className="ContenedorPrincipal">
+    <>
+      <div className='MainContainer'>
+        <Row className="ContenedorPrincipal">
           <Row className="SeccionBotones">
             <Row className="botonesSuperior" gutter={[16, 16]} justify="start">
               <Col span={8}>
@@ -24,7 +25,7 @@ export const Home: React.FC = () => {
               </Col>
             </Row>
 
-            <Row className="botonesInferior"  justify="start"> {/* Gutter reducido */}
+            <Row className="botonesInferior" justify="start"> {/* Gutter reducido */}
               <Col span={8}>
                 <BotonesModulos icon={<MedicineBoxOutlined className="iconsCustom" />} text="Excusas médicas" />
               </Col>
@@ -33,11 +34,11 @@ export const Home: React.FC = () => {
               </Col>
             </Row>
           </Row>
-       
 
 
-        {/* Sección de Tabla */}
-      
+
+          {/* Sección de Tabla */}
+
           <Row className="SeccionContainer">
             <Col span={24} className="SeccionTabla">
               <Paragraph className='ParrafoTabla'>Información académica</Paragraph>
@@ -60,8 +61,12 @@ export const Home: React.FC = () => {
             </Col>
           </Row>
 
-      </Row>
-    </div>
+        </Row>
+      </div>
+
+      <Footer />
+    </>
+
 
 
 
