@@ -1,9 +1,12 @@
 /* Contenedor principal */
 .ContenedorPrincipal {
-  justify-content: space-evenly;
+  display: flex; /* Asegura que el contenido interno se comporte como flex */
+  flex-direction: row; /* Mantiene las secciones en fila */
+  justify-content: space-evenly; /* Distribuye el espacio entre las columnas de forma equitativa */
   background-color: #f2f2f2;
-  margin-top: 12px;
-  width: 100%;
+  margin-top: 20px;
+  width: 90%; /* Se amplía un poco para mejor distribución del contenido */
+ height: max-content;
 }
 
 /* Sección Botones */
@@ -13,45 +16,53 @@
   background-color: white;
   border: 1px solid rgb(189, 189, 189);
   color: #28537e;
-  width: 85vh;
-  padding: 20px; /* Añadir padding para separar los botones del borde */
+  padding: 20px;
+  align-items: center;
+  width: 41%; 
 }
+
 
 /* Ajuste para los botones */
 .botonesSuperior, .botonesInferior {
   display: flex;
+  margin: 0 auto;
   width: 100%;
-  margin: 10px 0;
+  padding: 10px;
 }
 
-/* Centra los botones */
+/* Usa min-width para evitar que los botones sean demasiado pequeños */
 .botonesSuperior .ant-col, .botonesInferior .ant-col {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  padding: 10px;
 }
-.SeccionContainer{
-  width: 80vh;
+
+
+
+/* Contenedor para la tabla y las noticias */
+.SeccionContainer {
+  width: 37%; /* Ajusta el ancho de la sección de tabla y noticias */
+  display: flex;
+  
 }
 
 /* Sección Tabla */
 .SeccionTabla {
-  
   margin-bottom: 20px;
   border: 1px solid rgb(189, 189, 189);
   color: #28537e;
+  background-color: white;
 }
 
 /* Sección Noticias */
 .SeccionNoticias {
- 
-    margin-top: 20px; /* Mantén este margen para separación */
-    
-    color: #28537e;
+  margin-top: 20px;
+  color: #28537e;
+  background-color: white;
 }
-.CardTitleCustom p{
-  margin: 0;
-}
+
 /* Estilo de Contador de Noticias */
 .ContadorNoticias .ant-badge-count {
   background-color: #ffffff;
@@ -59,17 +70,14 @@
   font-size: 12px;
 }
 
-
-
 /* Estilo de título personalizado */
 .CardTitleCustom {
   display: flex;
-  justify-content: space-between; /* Coloca el texto y el badge en extremos opuestos */
-  align-items: center; /* Centra verticalmente */
+  justify-content: space-between;
+  align-items: center;
   background-color: #28537e;
   font-weight: bold;
   color: white;
-  
   height: 35px;
 }
 
@@ -79,9 +87,8 @@
   font-weight: bold;
   font-size: 14px;
 }
+
 .Parrafos {
   font-size: 14px;
-
-text-align: justify;
- 
+  text-align: justify;
 }
