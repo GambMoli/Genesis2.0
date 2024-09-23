@@ -1,22 +1,27 @@
 import React from 'react';
-import { Header } from '../../Core/Components';
+import { Typography, Row, Col } from 'antd';
+import { loginTexts } from '../Strings/Login';
+import { FormLogin } from '../../Core/Components';
+import './Login.css';
+
+const { Title, Paragraph } = Typography;
 
 export const Login: React.FC = () => {
   return (
-    <div>
-      <Header></Header>
-      <h1>LTU MAMA ME LO CHUPA RICO</h1>
-      <form>
-        <label>
-          Username:
-          <input type="text" name="username" />
-        </label>
-        <label>
-          Password:
-          <input type="password" name="password" />
-        </label>
-        <button type="submit">Login</button>
-      </form>
+    <div className="login-container">
+      <Row gutter={[16, 16]} className="login-wrapper">
+        <Col xs={24} md={14} className="login-info">
+          <Title>{loginTexts.title}</Title>
+          <Paragraph>{loginTexts.paragraph1}</Paragraph>
+          <Paragraph>{loginTexts.paragraph2}</Paragraph>
+          <div className="extra-link">
+            <Paragraph>Para inscribirse como aspirante haga <a href="#">clic aquí</a></Paragraph>
+          </div>
+        </Col>
+        <Col xs={24} md={10} className="login-form">
+          <FormLogin />
+        </Col>
+      </Row>
     </div>
   );
 };

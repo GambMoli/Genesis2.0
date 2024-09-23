@@ -1,19 +1,16 @@
 import React from 'react';
-import { Header } from '../../Core/Components';
-import { Row, Col, Card, Badge,Typography } from 'antd';
+import { Row, Col, Card, Badge, Typography } from 'antd';
 import { ReadOutlined, MessageOutlined, ProductOutlined, BookOutlined, MedicineBoxOutlined, SearchOutlined } from '@ant-design/icons';
 import './StylePrincipalPage.css';
 import { BotonesModulos } from '../../Core/Components/BotonesModulos';
 import { TablaInformacion } from '../../Core/Components/TablaPrincipalPage';
-const{Paragraph} = Typography;
+const { Paragraph } = Typography;
 export const Home: React.FC = () => {
   return (
     <Row className="ContenedorPrincipal" gutter={[16, 16]}>
-      
 
-      {/* Sección de Botones */}
-      <Row className="SeccionBotones" gutter={[8, 8]}> {/* Reduce el gutter para menos espacio */}
-        <Row className="botonesSuperior" gutter={[8, 8]} justify="start"> {/* Gutter reducido */}
+      <Row className="SeccionBotones" gutter={[8, 8]}>
+        <Row className="botonesSuperior" gutter={[8, 8]} justify="start">
           <Col span={8}>
             <BotonesModulos icon={<MessageOutlined className="iconsCustom" />} text="Mensajeria" />
           </Col>
@@ -24,7 +21,7 @@ export const Home: React.FC = () => {
             <BotonesModulos icon={<BookOutlined className="iconsCustom" />} text="Biblioteca" />
           </Col>
         </Row>
-        
+
         <Row className="botonesInferior" gutter={[8, 8]} justify="start"> {/* Gutter reducido */}
           <Col span={8}>
             <BotonesModulos icon={<MedicineBoxOutlined className="iconsCustom" />} text="Excusas médicas" />
@@ -41,7 +38,7 @@ export const Home: React.FC = () => {
           <Paragraph className='ParrafoTabla'>Información académica</Paragraph>
           <TablaInformacion />
         </Col>
-      
+
         {/* Sección Noticias */}
         <Col span={24} className="SeccionNoticias">
           <Card
@@ -57,8 +54,8 @@ export const Home: React.FC = () => {
           </Card>
         </Col>
       </Row>
-</Row>
+    </Row>
 
-    
+
   );
 };
