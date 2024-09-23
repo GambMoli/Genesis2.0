@@ -36,6 +36,6 @@ export const TablaInformacion = () => {
 
   return (
 
-    <Table columns={columns} dataSource={data} className="customTable" />
+    <Table columns={columns} dataSource={data} className="customTable" pagination={false}/>
   );
 }

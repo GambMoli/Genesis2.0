@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { 
   HomeFilled, 
   CalendarFilled, 
@@ -7,7 +7,6 @@ import {
   MenuOutlined,
   FileTextOutlined,
   BookOutlined,
-  ScheduleOutlined,
   FormOutlined,
   ClockCircleOutlined,
   BarChartOutlined,
@@ -69,7 +68,7 @@ export const Header = () => {
         <Col> Notas <BarChartOutlined /></Col>
         {user && (
           <>
-            <Col><ReadOutlined /> Tutoriales</Col>
+            <Col> Tutoriales <ReadOutlined /></Col>
             <Col>Calendario <CalendarFilled className='iconCalendar' /> </Col>
             <Col> Notificaciones <BellOutlined className='iconBell' /></Col>
             <Col> Sesión de la persona <UserOutlined className='iconUser' /></Col>
