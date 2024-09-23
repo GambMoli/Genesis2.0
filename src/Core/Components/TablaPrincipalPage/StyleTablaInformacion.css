@@ -1,0 +1,12 @@
+
+.customTable thead > tr > th {
+    background-color: #28537e !important; 
+    font-weight: bold !important;        
+    text-align: center !important;       
+    color: #ffffff !important;           
+    padding: 12px !important;           
+  }
+  .customTable{
+    margin-top: 1rem;
+    
+  }
