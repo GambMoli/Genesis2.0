@@ -1,32 +1,34 @@
 /* Contenedor principal */
 .ContenedorPrincipal {
-  display: flex; /* Asegura que el contenido interno se comporte como flex */
-  flex-direction: row; /* Mantiene las secciones en fila */
-  justify-content: space-evenly; /* Distribuye el espacio entre las columnas de forma equitativa */
+  display: flex;
+  flex-direction: row; /* Alinea los elementos en fila */
+  justify-content: space-between; /* Asegura que las secciones estén distribuidas uniformemente */
+  align-items: flex-start; /* Alinea los elementos al inicio */
   background-color: #f2f2f2;
   margin-top: 20px;
-  width: 90%; /* Se amplía un poco para mejor distribución del contenido */
- height: max-content;
+  width: 90%; /* Ajusta el ancho del contenedor principal */
+  margin-left: auto; /* Centra el contenedor */
+  height: 100%;
+  margin-right: auto; /* Centra el contenedor */
 }
 
 /* Sección Botones */
 .SeccionBotones {
-  display: flex;
-  flex-direction: column;
   background-color: white;
   border: 1px solid rgb(189, 189, 189);
   color: #28537e;
   padding: 20px;
   align-items: center;
-  width: 41%; 
+  width: 60%;
+  margin-left: 0 auto;
+  
 }
-
 
 /* Ajuste para los botones */
 .botonesSuperior, .botonesInferior {
   display: flex;
-  margin: 0 auto;
   width: 100%;
+  margin: 10px 0; 
   padding: 10px;
 }
 
@@ -39,18 +41,18 @@
   padding: 10px;
 }
 
-
-
-/* Contenedor para la tabla y las noticias */
+/* Contenedor de la tabla y las noticias */
 .SeccionContainer {
-  width: 37%; /* Ajusta el ancho de la sección de tabla y noticias */
+  width: 35%;
   display: flex;
+  flex-direction: column;
+ 
   
 }
 
 /* Sección Tabla */
 .SeccionTabla {
-  margin-bottom: 20px;
+ 
   border: 1px solid rgb(189, 189, 189);
   color: #28537e;
   background-color: white;
@@ -58,9 +60,8 @@
 
 /* Sección Noticias */
 .SeccionNoticias {
-  margin-top: 20px;
+  
   color: #28537e;
-  background-color: white;
 }
 
 /* Estilo de Contador de Noticias */

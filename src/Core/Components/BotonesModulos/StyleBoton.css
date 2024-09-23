@@ -1,8 +1,8 @@
 
 .customButton{
     border: 1px solid #28537e; 
-    height: 6rem ;
-    width: 10rem;
+    height: 7rem ;
+    width: 100%;
 }
 .iconTextContainer {
     display: flex;

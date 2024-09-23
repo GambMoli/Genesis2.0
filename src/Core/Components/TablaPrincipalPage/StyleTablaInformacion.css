@@ -1,12 +1,26 @@
+.customTable {
+  margin-top: 1rem;
+  
+}
 
-.customTable thead > tr > th {
-    background-color: #28537e !important; 
-    font-weight: bold !important;        
-    text-align: center !important;       
-    color: #ffffff !important;           
-    padding: 12px !important;           
-  }
-  .customTable{
-    margin-top: 1rem;
-    
-  }
+/* Personalización para reducir el espacio en la tabla */
+.customTable .ant-table-thead > tr > th, 
+.customTable .ant-table-tbody > tr > td {
+  padding: 4px 8px; /* Reduce el padding de las celdas */
+  font-size: 14px;  /* Ajusta el tamaño de la fuente si es necesario */
+}
+
+/* Ajusta el alto de las filas */
+.customTable .ant-table-tbody > tr {
+  height: 32px; /* Reduce la altura de las filas */
+}
+
+/* Opcional: Ajuste para el encabezado de la tabla */
+.customTable .ant-table-thead > tr > th {
+  font-weight: bold;
+  background-color: #28537e; 
+  text-align: center;       
+  color: #ffffff;           
+  padding: 12px;
+}
+
