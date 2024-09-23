@@ -4,13 +4,14 @@ import { ReadOutlined, MessageOutlined, ProductOutlined, BookOutlined, MedicineB
 import './StylePrincipalPage.css';
 import { BotonesModulos } from '../../Core/Components/BotonesModulos';
 import { TablaInformacion } from '../../Core/Components/TablaPrincipalPage';
+
 const { Paragraph } = Typography;
 export const Home: React.FC = () => {
   return (
     <Row className="ContenedorPrincipal" gutter={[16, 16]}>
 
       <Row className="SeccionBotones" gutter={[8, 8]}>
-        <Row className="botonesSuperior" gutter={[8, 8]} justify="start">
+        <Row className="botonesSuperior" gutter={[16, 16]} justify="start">
           <Col span={8}>
             <BotonesModulos icon={<MessageOutlined className="iconsCustom" />} text="Mensajeria" />
           </Col>
@@ -22,7 +23,7 @@ export const Home: React.FC = () => {
           </Col>
         </Row>
 
-        <Row className="botonesInferior" gutter={[8, 8]} justify="start"> {/* Gutter reducido */}
+        <Row className="botonesInferior" gutter={[16, 16]} justify="start"> {/* Gutter reducido */}
           <Col span={8}>
             <BotonesModulos icon={<MedicineBoxOutlined className="iconsCustom" />} text="Excusas médicas" />
           </Col>
