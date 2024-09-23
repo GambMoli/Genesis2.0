@@ -1,0 +1,18 @@
+
+.customButton{
+    border: 1px solid #28537e; 
+    height: 6rem ;
+    width: 10rem;
+}
+.iconTextContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: #28537e; 
+  }
+  
+  .iconsCustom {
+    font-size: 30px; 
+    margin-bottom: 8px; 
+  }

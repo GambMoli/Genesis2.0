@@ -1,0 +1,105 @@
+.LogoUdes {
+  width: 25rem;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+.BotonHome {
+  border: none;
+  background-color: transparent;
+}
+
+.navBar {
+  background-color: rgb(255, 255, 255);
+  width: 80%;
+  height: 70px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.EspacioIzquierdo {
+  display: flex;
+  padding: 3px;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.EspacioIzquierdo a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.EspacioIzquierdo a:hover {
+  color: #1890ff; 
+}
+
+.ant-drawer-body .anticon {
+  margin-right: 8px;
+}
+
+.EspacioDerecho {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 3px;
+  margin-left: auto; /* Push to the right */
+}
+
+.EspacioDerecho Col, .EspacioIzquierdo Col {
+  column-span: 1.5;
+}
+
+/* New styles for hamburger menu and drawer */
+.hamburger-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.ant-drawer-body {
+  padding: 24px;
+}
+
+.ant-drawer-body .ant-col {
+  margin-bottom: 16px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.ant-drawer-body .ant-col:hover {
+  color: #1890ff; /* Ant Design's primary color */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .LogoUdes {
+    width: 15rem;
+  }
+
+  .navBar {
+    width: 95%;
+  }
+
+  .EspacioIzquierdo {
+    gap: 1rem;
+  }
+
+  .EspacioIzquierdo Col:not(:first-child) {
+    display: none; /* Hide menu items on
