@@ -45,7 +45,7 @@
 }
 
 .EspacioIzquierdo a:hover {
-  color: #1890ff; 
+  color: #1890ff;
 }
 
 .ant-drawer-body .anticon {
@@ -102,6 +102,8 @@
   }
 
   .EspacioIzquierdo Col:not(:first-child) {
-    display: none; 
+    display: none;
 
   }
+
+}

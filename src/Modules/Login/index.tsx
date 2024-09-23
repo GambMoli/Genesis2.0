@@ -4,7 +4,6 @@ import { loginTexts } from '../Strings/Login';
 import { FormLogin } from '../../Core/Components';
 import { Footer } from '../../Core/Components';
 import './Login.css';
-
 const { Title, Paragraph } = Typography;
 
 export const Login: React.FC = () => {
