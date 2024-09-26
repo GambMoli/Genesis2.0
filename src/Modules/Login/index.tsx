@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Typography, Row, Col } from 'antd';
 import { loginTexts } from '../Strings/Login';
 import { FormLogin } from '../../Core/Components';
 import { Footer } from '../../Core/Components';
 import './Login.css';
 const { Title, Paragraph } = Typography;
+import { getUsers } from '../../Core/Services/ModulesRequest/LoginRequest';
 
 export const Login: React.FC = () => {
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
   return (
     <>
       <div className="login-container">
