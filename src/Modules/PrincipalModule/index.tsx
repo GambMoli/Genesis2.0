@@ -6,6 +6,7 @@ import { BotonesModulos } from '../../Core/Components/BotonesModulos';
 import { TablaInformacion } from '../../Core/Components/TablaPrincipalPage';
 import { Footer } from '../../Core/Components';
 
+
 const { Paragraph } = Typography;
 export const Home: React.FC = () => {
   return (

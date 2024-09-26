@@ -1,19 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Input, Button, Typography, Divider, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import { POST } from '../../Services/request';
 
 const { Title, Text, Link } = Typography;
 
 export const FormLogin: React.FC = () => {
   const navigate = useNavigate();
+  const [data, setData] = useState({ email: '', password: '' });
+ 
 
-  const onFinish = (values: { username: string; password: string }) => {
-    localStorage.setItem('user', values.username);
-    message.success('Inicio de sesión exitoso');
-    navigate('/home');
+  const onFinish = async () => {
+    
+    try {
+      const response = await POST('/users/validate', data);
+      
+      if (response) {
+        navigate('/home');
+      } else {
+        message.error('Ocurrió un error al intentar iniciar sesión');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      message.error('Ocurrió un error al intentar iniciar sesión');
+    } 
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
   };
@@ -28,11 +40,17 @@ export const FormLogin: React.FC = () => {
       <Title level={3}>Ingreso de estudiantes</Title>
 
       <Form.Item
-        label="Usuario"
-        name="username"
-        rules={[{ required: true, message: 'Por favor ingrese su usuario' }]}
+        label="Correo electrónico"
+        name="email"
+        rules={[
+          { required: true, message: 'Por favor ingrese su correo electrónico' },
+          { type: 'email', message: 'Por favor ingrese un correo electrónico válido' }
+        ]}
       >
-        <Input />
+        <Input
+          value={data.email}
+          onChange={(e) => setData({ ...data, email: e.target.value })}
+        />
       </Form.Item>
 
       <Form.Item
@@ -40,11 +58,14 @@ export const FormLogin: React.FC = () => {
         name="password"
         rules={[{ required: true, message: 'Por favor ingrese su contraseña' }]}
       >
-        <Input.Password />
+        <Input.Password
+          value={data.password}
+          onChange={(e) => setData({ ...data, password: e.target.value })}
+        />
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit" block>
+        <Button type="primary" htmlType="submit" block >
           Ingresar
         </Button>
         <Link href="#" style={{ float: 'right', marginTop: '10px' }}>

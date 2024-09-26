@@ -7,10 +7,12 @@ import './Login.css';
 const { Title, Paragraph } = Typography;
 import { getUsers } from '../../Core/Services/ModulesRequest/LoginRequest';
 
-export const Login: React.FC = () => {
 
+export const Login: React.FC = () => {
+  
   useEffect(() => {
     getUsers();
+    
   }, []);
 
   return (
