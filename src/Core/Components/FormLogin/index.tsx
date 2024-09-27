@@ -5,15 +5,16 @@ import { postUsers } from '../../Services/ModulesRequest/LoginRequest';
 
 const { Title, Text, Link } = Typography;
 
+
 export const FormLogin: React.FC = () => {
   const navigate = useNavigate();
   const [data, setData] = useState({ email: '', password: '' });
  
-
   const onFinish = async () => {
-    const response= await postUsers(data)
     try {
-      if (response) {
+      const response = await postUsers(data);
+  
+      if (!response.error) {
         navigate('/home');
       } else {
         message.error('Ocurrió un error al intentar iniciar sesión');
@@ -21,8 +22,9 @@ export const FormLogin: React.FC = () => {
     } catch (error) {
       console.error('Error:', error);
       message.error('Ocurrió un error al intentar iniciar sesión');
-    } 
+    }
   };
+  
 
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
