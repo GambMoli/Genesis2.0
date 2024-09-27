@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Input, Button, Typography, Divider, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { POST } from '../../Services/request';
+import { postUsers } from '../../Services/ModulesRequest/LoginRequest';
 
 const { Title, Text, Link } = Typography;
 
@@ -11,10 +11,8 @@ export const FormLogin: React.FC = () => {
  
 
   const onFinish = async () => {
-    
+    const response= await postUsers(data)
     try {
-      const response = await POST('/users/validate', data);
-      
       if (response) {
         navigate('/home');
       } else {
