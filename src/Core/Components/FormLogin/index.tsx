@@ -7,24 +7,27 @@ const { Title, Text, Link } = Typography;
 
 export const FormLogin: React.FC = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState({ email: '', password: '' }); 
- 
-  const onFinish = async () => {
-      try{
-        const response = await postUsers(data);
-        if (!response.error) {
-          navigate('/home');
-          localStorage.setItem('user', JSON.stringify(response));
-        }
-        else{
-          message.error("Usuario o contraseña inválidos");
-        }
-      }catch(error){
-        message.error("Usuario o contraseña inválidos")
-      }
-  };
-  
+  const [data, setData] = useState({ email: '', password: '' });
 
+  const onFinish = async () => {
+    try {
+      const response = await postUsers(data);
+
+      localStorage.setItem('user', JSON.stringify(response));
+
+      if (!response.error) {
+        navigate('/home');
+      } else {
+        message.error('Ocurrió un error al intentar iniciar sesión');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      message.error('Usuario o contraseña incorrectos.');
+    }
+  };
+
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
   };

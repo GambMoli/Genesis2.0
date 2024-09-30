@@ -1,11 +1,58 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { Login, Home } from './Modules';
-
-import { Header, Footer} from './Core/Components';
-import { Espacios } from './Modules/Espacios';
+import { Header, Footer } from './Core/Components';
+import { EspaciosStudent, EspaciosAdmin } from './Modules/Espacios';
 
 const App: React.FC = () => {
+
+
+  const getUserRoleFromLocalStorage = (): string | null => {
+    const userString = localStorage.getItem('user');
+    if (userString) {
+      const user = JSON.parse(userString);
+      return user.role;
+    }
+    return null;
+  };
+
+  useEffect(() => {
+    const checkUserRole = () => {
+      const role = getUserRoleFromLocalStorage();
+      return role;
+    };
+
+
+    checkUserRole();
+
+
+    const intervalId = setInterval(checkUserRole, 1000);
+
+
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'user') {
+        checkUserRole();
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => {
+      clearInterval(intervalId);
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+
+  const EspaciosRoute = () => {
+    const currentRole = getUserRoleFromLocalStorage();
+    if (currentRole === "Administrativo") {
+      return <EspaciosAdmin />;
+    } else if (currentRole) {
+      return <EspaciosStudent />;
+    } else {
+      return <Navigate to="/" />;
+    }
+  };
+
   return (
     <Router>
       <Header />
@@ -13,8 +60,9 @@ const App: React.FC = () => {
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/footer" element={<Footer />} />
-        <Route path="/Espacios" element={<Espacios/>}></Route>
+        <Route path="/Espacios" element={<EspaciosRoute />} />
       </Routes>
+      <Footer />
     </Router>
   );
 };

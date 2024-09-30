@@ -4,38 +4,37 @@ import { ReadOutlined, MessageOutlined, ProductOutlined, BookOutlined, MedicineB
 import './StylePrincipalPage.css';
 import { BotonesModulos } from '../../Core/Components/BotonesModulos';
 import { TablaInformacion } from '../../Core/Components/TablaPrincipalPage';
-import { Footer } from '../../Core/Components';
 import { useNavigate } from 'react-router-dom';
 
 
 const { Paragraph } = Typography;
 export const Home: React.FC = () => {
   const navigate = useNavigate();
- 
+
   return (
     <>
-    
+
       <div className='MainContainer'>
         <Row className="ContenedorPrincipal">
           <Row className="SeccionBotones">
             <Row className="botonesSuperior" gutter={[16, 16]} justify="start">
               <Col span={8}>
-                <BotonesModulos icon={<MessageOutlined className="iconsCustom" />} text="Mensajeria" onClick={()=>''}  />
+                <BotonesModulos icon={<MessageOutlined className="iconsCustom" />} text="Mensajeria" onClick={() => ''} />
               </Col>
               <Col span={8}>
-                <BotonesModulos icon={<ProductOutlined className="iconsCustom" />} text="Espacios" onClick={()=>navigate('/Espacios')}/>
+                <BotonesModulos icon={<ProductOutlined className="iconsCustom" />} text="Espacios" onClick={() => navigate('/Espacios')} />
               </Col>
               <Col span={8}>
-                <BotonesModulos icon={<BookOutlined className="iconsCustom" />} text="Biblioteca" onClick={()=>''}/>
+                <BotonesModulos icon={<BookOutlined className="iconsCustom" />} text="Biblioteca" onClick={() => ''} />
               </Col>
             </Row>
 
             <Row className="botonesInferior" justify="start"> {/* Gutter reducido */}
               <Col span={8}>
-                <BotonesModulos icon={<MedicineBoxOutlined className="iconsCustom" />} text="Excusas médicas" onClick={()=>''} />
+                <BotonesModulos icon={<MedicineBoxOutlined className="iconsCustom" />} text="Excusas médicas" onClick={() => ''} />
               </Col>
               <Col span={8}>
-                <BotonesModulos icon={<SearchOutlined className="iconsCustom" />} text="Pasantías" onClick={()=>''}/>
+                <BotonesModulos icon={<SearchOutlined className="iconsCustom" />} text="Pasantías" onClick={() => ''} />
               </Col>
             </Row>
           </Row>
@@ -69,7 +68,6 @@ export const Home: React.FC = () => {
         </Row>
       </div>
 
-      <Footer />
     </>
 
 
