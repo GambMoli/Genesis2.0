@@ -1,0 +1,17 @@
+.reservaciones-container {
+    
+    margin: 0 auto;
+    width: 50%;
+    
+}
+.reservacion-item{
+    background-color: #dfdede;
+    margin-bottom: 5%;
+    border: 1px solid #b5b5b5;
+    padding-bottom: 14px;
+}
+.textoInfo{
+    color: black;
+    font-size: 15px;
+    font-weight: bold;
+}
