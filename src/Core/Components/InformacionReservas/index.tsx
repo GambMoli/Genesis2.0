@@ -46,9 +46,11 @@ export const InformacionReserva: React.FC = () => {
             <br />
             <Text><strong>Razón: </strong> {reserva.details.reason}</Text>
             <br />
-            <Text><strong>Fecha de inicio: </strong> {format(new Date(reserva.details.startDate), "MM/dd/yyyy")}</Text>
+            <Text><strong>Fecha de inicio: </strong> {format(new Date(reserva.details.startDate), "dd/MM/yyyy")}</Text>
             <br />
-            <Text><strong>Fecha de fin: </strong> {format(new Date(reserva.details.endDate), "MM/dd/yyyy")}</Text>
+            <Text><strong>Fecha de fin: </strong> {format(new Date(reserva.details.endDate), "dd/MM/yyyy")}</Text>
+            <br />
+            <Text><strong>Estado: </strong> {reserva.details.status}</Text>
           </div>
         ))}
       </div>

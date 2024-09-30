@@ -7,24 +7,21 @@ const { Title, Text, Link } = Typography;
 
 export const FormLogin: React.FC = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState({ email: '', password: '' });
+  const [data, setData] = useState({ email: '', password: '' }); 
  
   const onFinish = async () => {
-    try {
-      const response = await postUsers(data);
-      
-      // Guarda los datos del usuario en el localStorage
-      localStorage.setItem('user', JSON.stringify(response));
-  
-      if (!response.error) {
-        navigate('/home');
-      } else {
-        message.error('Ocurrió un error al intentar iniciar sesión');
+      try{
+        const response = await postUsers(data);
+        if (!response.error) {
+          navigate('/home');
+          localStorage.setItem('user', JSON.stringify(response));
+        }
+        else{
+          message.error("Usuario o contraseña inválidos");
+        }
+      }catch(error){
+        message.error("Usuario o contraseña inválidos")
       }
-    } catch (error) {
-      console.error('Error:', error);
-      message.error('Ocurrió un error al intentar iniciar sesión');
-    }
   };
   
 

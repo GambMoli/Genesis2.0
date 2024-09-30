@@ -1,7 +1,7 @@
 import { GET, POST } from '../../request'
 
 interface PostUsersResponse {
-  error?: boolean; 
+  error?: string; 
   data?: any;      
 }
 export const getUsers = async () => {
