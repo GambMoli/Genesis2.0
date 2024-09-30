@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import { Login, Home } from './Modules';
 import { Header, Footer } from './Core/Components';
 import { EspaciosStudent, EspaciosAdmin } from './Modules/Espacios';
+import { Biblioteca } from './Modules';
 
 const App: React.FC = () => {
 
@@ -59,7 +60,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/footer" element={<Footer />} />
+        <Route path="/Biblioteca" element={<Biblioteca />} />
         <Route path="/Espacios" element={<EspaciosRoute />} />
       </Routes>
       <Footer />

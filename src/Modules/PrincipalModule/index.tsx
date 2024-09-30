@@ -25,7 +25,7 @@ export const Home: React.FC = () => {
                 <BotonesModulos icon={<ProductOutlined className="iconsCustom" />} text="Espacios" onClick={() => navigate('/Espacios')} />
               </Col>
               <Col span={8}>
-                <BotonesModulos icon={<BookOutlined className="iconsCustom" />} text="Biblioteca" onClick={() => ''} />
+                <BotonesModulos icon={<BookOutlined className="iconsCustom" />} text="Biblioteca" onClick={() => navigate('/Biblioteca')} />
               </Col>
             </Row>
 
