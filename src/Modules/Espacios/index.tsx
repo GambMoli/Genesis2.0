@@ -18,7 +18,7 @@ export const Espacios: React.FC = () => {
   const [data, setData] = useState({ espacioId: '', reason: '', startDate: '', endDate: '' });
   const [espacios, setEspacios] = useState<Espacio[]>([]);
 
- 
+  // Obtener los espacios disponibles
   useEffect(() => {
     const fetchEspacios = async () => {
       try {
@@ -31,7 +31,7 @@ export const Espacios: React.FC = () => {
     fetchEspacios();
   }, []);
 
-
+  // Función para enviar la reserva
   const onFinish = async () => {
     const storedUser = localStorage.getItem('user');
 
@@ -56,40 +56,40 @@ export const Espacios: React.FC = () => {
         }
       } catch (error) {
         console.error("Error al hacer la reserva", error);
-        message.error("Error al hacer la reserva. Inténtalo de nuevo.");
+        message.error("Ya se encuentro reservado el espacio seleccionado.");
       }
     } else {
       message.error("No se ha encontrado el usuario.");
     }
   };
 
-
+  // Mostrar el modal
   const showModal = () => {
     setModalOpen(true);
   };
 
-  
+  // Cerrar el modal
   const handleCancel = () => {
     setModalOpen(false);
   };
 
-  
+  // Capturar el espacio seleccionado
   const handleSpaceChange = (value: string) => {
     setData({ ...data, espacioId: value });
   };
 
-
+  // Capturar las fechas seleccionadas
   const handleDateChange = (dates: any, dateStrings: [string, string]) => {
     if (dates) {
       setData({
         ...data,
-        startDate: dateStrings[0], 
-        endDate: dateStrings[1],   
+        startDate: dateStrings[0], // Fecha de inicio
+        endDate: dateStrings[1],   // Fecha de fin
       });
     }
   };
 
-  
+  // Capturar la razón de la reserva
   const handleReasonChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({ ...data, reason: e.target.value });
   };
@@ -101,7 +101,7 @@ export const Espacios: React.FC = () => {
         <InformacionReserva />
       </div>
 
-      <Form layout="vertical" >
+      <Form layout="vertical" onFinish={onFinish}>
         <div className='BotonAgregar'>
           <Paragraph className='TituloDeReserva'>Reservar: </Paragraph>
           <Button className='Boton' onClick={showModal}>
@@ -148,8 +148,7 @@ export const Espacios: React.FC = () => {
                 rules={[{ required: true, message: 'Por favor, seleccione un rango de tiempo' }]}
               >
                 <RangePicker
-                  showTime={{ format: 'HH:mm' }}
-                  format="YYYY-MM-DD HH:mm"
+                  format="YYYY-MM-DD" // Formato sin showTime
                   onChange={handleDateChange}
                   style={{ width: '100%' }}
                 />
