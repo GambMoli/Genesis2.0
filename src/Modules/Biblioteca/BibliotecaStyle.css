@@ -1,0 +1,67 @@
+.ContenedorBiblioteca {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 40px;
+    padding: 1% 0 1% 0;
+  }
+  
+  .SearchBox {
+    flex-grow: 1;
+    justify-content: space-between;
+    max-width: 600px;
+
+  }
+  
+.Reservas {
+    align-items: right;
+}
+
+.Libros{
+    justify-content: center;
+
+}
+  
+.MainContainerBiblioteca{
+    width: 80%;
+    margin: auto;
+    margin-top: 2rem;
+}
+
+.book-card {
+  width: 280px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.book-card .ant-card-cover {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 240px;
+  overflow: hidden;
+  padding: 5% 0 0 0 ;
+}
+
+.book-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.book-content {
+  text-align: left;
+}
+
+.book-card .ant-card-body {
+  padding: 0 0 10% 10%;
+}
+
+.book-card .ant-typography {
+  margin-bottom: 3%px;
+}
+
+.pdf-availability {
+  display: block;
+  margin-top: 3%;
+}
+
