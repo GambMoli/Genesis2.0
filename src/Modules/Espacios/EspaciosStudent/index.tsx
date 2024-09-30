@@ -106,7 +106,7 @@ export const EspaciosStudent: React.FC = () => {
         </div>
 
         <div className='BotonAgregarContainer'>
-          <Button type="primary" icon={<PlusOutlined />} onClick={showModal} className='BotonAgregar'>
+          <Button type="primary" icon={<PlusOutlined />} onClick={showModal} className='BotonAgregar' style={{backgroundColor:'#28537e',color:'white',fontWeight:'bold'}}>
             Reservar
           </Button>
         </div>
