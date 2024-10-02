@@ -41,7 +41,7 @@ export const EspaciosAdmin: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedReserva, setSelectedReserva] = useState<Reserva | null>(null);
-  const [modalConfig, setModalConfig] = useState<{ title: string; message: string; icon: React.ReactNode; newStatus: 'Aceptado' | 'Rechazado' } | null>(null);
+  const [modalConfig, setModalConfig] = useState<{ title: string; message: string; icon: React.ReactNode; newStatus: string } | null>(null);
 
   useEffect(() => {
     fetchReservas(1, 10);
@@ -84,15 +84,17 @@ export const EspaciosAdmin: React.FC = () => {
         title: "Confirmar aceptación",
         message: "¿Estás seguro de aceptar esta reserva?",
         icon: <CheckCircleOutlined style={{ fontSize: '48px', color: '#52c41a' }} />,
+        newStatus: 'Aceptado',
       },
       Rechazado: {
         title: "Confirmar rechazo",
         message: "¿Estás seguro de rechazar esta reserva?",
         icon: <CloseCircleOutlined style={{ fontSize: '48px', color: '#f5222d' }} />,
+        newStatus: 'Rechazado por admin'
       }
     }[newStatus];
 
-    setModalConfig({ ...config, newStatus });
+    setModalConfig(config);
     setSelectedReserva(reserva);
     setModalVisible(true);
   };
