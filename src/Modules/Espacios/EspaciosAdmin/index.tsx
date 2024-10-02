@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button, message, Typography, Pagination } from 'antd';
-import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
+import { CheckOutlined, CloseOutlined, CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import { changeStatus, getListReservas } from "../../../Core/Services/ModulesRequest/EspaciosRequest";
 import { SpinnerApp } from '../../../Core/Components/Spinner';
+import { ModalMessage } from '../../../Core/Components/ModalMessage';
 
 const { Title } = Typography;
 
@@ -38,6 +39,9 @@ export const EspaciosAdmin: React.FC = () => {
     data: []
   });
   const [loading, setLoading] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedReserva, setSelectedReserva] = useState<Reserva | null>(null);
+  const [modalConfig, setModalConfig] = useState<{ title: string; message: string; icon: React.ReactNode; newStatus: 'Aceptado' | 'Rechazado' } | null>(null);
 
   useEffect(() => {
     fetchReservas(1, 10);
@@ -59,15 +63,38 @@ export const EspaciosAdmin: React.FC = () => {
     }
   };
 
-  const handleStatusChange = async (reservaId: number, newStatus: 'Aceptado' | 'Rechazado') => {
-    try {
-      await changeStatus(reservaId, { newStatus });
-      message.success(`Reservacion ${newStatus.toLowerCase()}`);
-      fetchReservas(reservas.currentPage, reservas.pageSize);
-    } catch (error) {
-      console.error("Error changing status:", error);
-      message.error("Failed to change reservation status");
+  const handleStatusChange = async () => {
+    if (selectedReserva && modalConfig) {
+      try {
+        await changeStatus(selectedReserva.reservaId, { newStatus: modalConfig.newStatus });
+        message.success(`Reservación ${modalConfig.newStatus.toLowerCase()}`);
+        fetchReservas(reservas.currentPage, reservas.pageSize);
+      } catch (error) {
+        console.error("Error changing status:", error);
+        message.error("Failed to change reservation status");
+      } finally {
+        setModalVisible(false);
+      }
     }
+  };
+
+  const showModal = (reserva: Reserva, newStatus: 'Aceptado' | 'Rechazado') => {
+    const config = {
+      Aceptado: {
+        title: "Confirmar aceptación",
+        message: "¿Estás seguro de aceptar esta reserva?",
+        icon: <CheckCircleOutlined style={{ fontSize: '48px', color: '#52c41a' }} />,
+      },
+      Rechazado: {
+        title: "Confirmar rechazo",
+        message: "¿Estás seguro de rechazar esta reserva?",
+        icon: <CloseCircleOutlined style={{ fontSize: '48px', color: '#f5222d' }} />,
+      }
+    }[newStatus];
+
+    setModalConfig({ ...config, newStatus });
+    setSelectedReserva(reserva);
+    setModalVisible(true);
   };
 
   const formatDate = (dateString: string) => {
@@ -105,14 +132,14 @@ export const EspaciosAdmin: React.FC = () => {
           <Button
             type="primary"
             icon={<CheckOutlined />}
-            onClick={() => handleStatusChange(record.reservaId, 'Aceptado')}
+            onClick={() => showModal(record, 'Aceptado')}
             disabled={record.status !== 'pendiente'}
             style={{ marginRight: 8 }}
           />
           <Button
             danger
             icon={<CloseOutlined />}
-            onClick={() => handleStatusChange(record.reservaId, 'Rechazado')}
+            onClick={() => showModal(record, 'Rechazado')}
             disabled={record.status !== 'pendiente'}
           />
         </>
@@ -127,6 +154,7 @@ export const EspaciosAdmin: React.FC = () => {
       </div>
     );
   }
+
   return (
     <div style={{ width: "80%", margin: "auto", padding: "20px" }}>
       <Title style={{ fontSize: "24px" }}>
@@ -147,6 +175,16 @@ export const EspaciosAdmin: React.FC = () => {
           style={{ marginTop: '20px', textAlign: 'right' }}
         />
       </>
+      {modalConfig && (
+        <ModalMessage
+          visible={modalVisible}
+          onOk={handleStatusChange}
+          onCancel={() => setModalVisible(false)}
+          icon={modalConfig.icon}
+          title={modalConfig.title}
+          message={modalConfig.message}
+        />
+      )}
     </div>
   );
 };
