@@ -30,14 +30,17 @@ interface ReservaDetails {
 export interface ReservaResponse {
   type: string;
   details: ReservaDetails;
+  status: string
+  reservaId: number
 }
 
 export interface ApiResponse {
+  success: ReservaResponse[];
   data: ReservaResponse[];
 }
 
-export const getReserva = async (userID: string): Promise<ApiResponse> => {
-  const response = await GET(`/spaces/history/${userID}`);
+export const getReserva = async (userID: string, page: number, pageSize: number): Promise<ApiResponse> => {
+  const response = await GET(`/spaces/history/${userID}?page=${page}&pageSize=${pageSize}`);
   return response as ApiResponse;
 };
 

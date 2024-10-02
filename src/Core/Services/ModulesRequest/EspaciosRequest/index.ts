@@ -11,7 +11,7 @@ export const changeStatus = async (reservaID: number, data: changeStatus) => {
 }
 
 
-export const getListReservas = async () => {
-  const response = GET('/spaces/all-reservations')
+export const getListReservas = async (page: number, pageSize: number) => {
+  const response = GET(`/spaces/all-reservations?page=${page}&pageSize=${pageSize}`)
   return response
 }
