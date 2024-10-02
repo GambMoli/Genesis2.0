@@ -79,7 +79,7 @@ export const EspaciosStudent: React.FC = () => {
   const handleSpaceChange = (value: string) => {
     setData({ ...data, espacioId: value });
   };
-
+  
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleDateChange = (dates: any, dateStrings: [string, string]) => {
     if (dates) {
@@ -99,17 +99,20 @@ export const EspaciosStudent: React.FC = () => {
     <div className='MainContainer'>
       <div className='ContenedorPrincipalEspaciosStudent'>
         <div className='ModulosDeInformacion'>
+          
+          <div className='BotonAgregarContainer'>
           <Title level={2} className='Titulodelmodulo'>Historial de Reservas</Title>
-          <div className='ReservacionesContainer'>
-            <InformacionReserva />
-          </div>
-        </div>
-
-        <div className='BotonAgregarContainer'>
           <Button type="primary" icon={<PlusOutlined />} onClick={showModal} className='BotonAgregar' style={{backgroundColor:'#28537e',color:'white',fontWeight:'bold'}}>
             Reservar
           </Button>
+          </div>
+          <div className='ReservacionesContainer'>
+            <InformacionReserva />
+          </div>
+          
         </div>
+
+        
 
         <Modal title="Nueva Reserva" open={isModalOpen} onCancel={handleCancel} footer={null}>
           <Form layout="vertical" onFinish={onFinish}>

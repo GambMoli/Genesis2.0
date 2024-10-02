@@ -13,33 +13,29 @@
 }
 
 .ModulosDeInformacion {
-  width: 90%;
-  text-align: center;
-  margin-left: 100px;
+  width: 100%;
+  
 }
 
 .ReservacionesContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  
   margin: 0 auto;
 }
 
 .BotonAgregarContainer {
   display: flex;
-  justify-content: flex-end;
-  width: 10%;
-  margin-top: 20px;
+  justify-content: space-between;
+  align-items: center;
+  
+  
 }
 
 .BotonAgregar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+  margin-top: 10px;
   height: 40px;
-  padding: 0 16px;
 }
 
 .Titulodelmodulo {

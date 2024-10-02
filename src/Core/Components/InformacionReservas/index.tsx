@@ -1,23 +1,20 @@
 import React, { useEffect, useState } from "react";
+import { Table, Button, message, Spin } from "antd";
 import { getReserva, ReservaResponse, ApiResponse } from "../../Services/ModulesRequest/LoginRequest";
 import { format } from 'date-fns';
-import { Typography, Pagination, Spin } from "antd";
 import { LoadingOutlined } from '@ant-design/icons';
-import './styleInformacion.css'
+import './styleInformacion.css';
 
-const { Text } = Typography;
+
 
 export const InformacionReserva: React.FC = () => {
   const [reservaciones, setReservaciones] = useState<ReservaResponse[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
-  const reservationsPerPage = 4;
 
   useEffect(() => {
     const fetchReserva = async () => {
       setLoading(true);
       const storedUser = localStorage.getItem('user');
-      console.log('Usuario almacenado:', storedUser);
       if (storedUser) {
         try {
           const user = JSON.parse(storedUser);
@@ -43,26 +40,59 @@ export const InformacionReserva: React.FC = () => {
     fetchReserva();
   }, []);
 
-  const getStatusStyle = (status: string) => {
-    switch (status.toLowerCase()) {
+  const handleModify = (reservaId: number) => {
+    message.info(`Modificar reserva con ID: ${reservaId}`);
+  };
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return format(date, 'dd/MM/yyyy HH:mm');
+  };
+
+  const rowClassName = (record: ReservaResponse) => {
+    switch (record.details.status.toLowerCase()) {
       case 'aceptado':
-        return { backgroundColor: '#e6ffed', borderColor: '#b7eb8f' };
+        return 'row-aceptado';
       case 'pendiente':
-        return { backgroundColor: '#fffbe6', borderColor: '#ffe58f' };
+        return 'row-pendiente';
       case 'rechazado':
-        return { backgroundColor: '#fff1f0', borderColor: '#ffa39e' };
+        return 'row-rechazado';
       default:
-        return {};
+        return '';
     }
   };
 
-  const indexOfLastReservation = currentPage * reservationsPerPage;
-  const indexOfFirstReservation = indexOfLastReservation - reservationsPerPage;
-  const currentReservations = reservaciones.slice(indexOfFirstReservation, indexOfLastReservation);
-
-  const onPageChange = (page: number) => {
-    setCurrentPage(page);
-  };
+  const columns = [
+    { title: 'Espacio', dataIndex: ['details', 'spaceName'], key: 'spaceName' },
+    { title: 'Razón', dataIndex: ['details', 'reason'], key: 'reason' },
+    {
+      title: 'Fecha de inicio',
+      dataIndex: ['details', 'startDate'],
+      key: 'startDate',
+      render: (date: string) => formatDate(date)
+    },
+    {
+      title: 'Fecha fin',
+      dataIndex: ['details', 'endDate'],
+      key: 'endDate',
+      render: (date: string) => formatDate(date)
+    },
+    { title: 'Estado', dataIndex: ['details', 'status'], key: 'status' },
+    {
+      title: 'Acciones',
+      key: 'actions',
+      render: (record: ReservaResponse) => (
+        <Button
+          type="primary"
+          onClick={() => handleModify(record.details.reservaId)}
+          disabled={record.details.status.toLowerCase() !== 'pendiente'}
+          style={{backgroundColor:'#28537e',color:'white',fontWeight:'bold'}}
+        >
+          Modificar
+        </Button>
+      ),
+    },
+  ];
 
   if (loading) {
     return (
@@ -73,43 +103,17 @@ export const InformacionReserva: React.FC = () => {
   }
 
   return (
-    <>
-      <div className="reservaciones-container">
-        {currentReservations.map((reserva) => (
-          <div
-            key={reserva.details.reservaId}
-            className="reservacion-item"
-            style={{
-              ...getStatusStyle(reserva.details.status),
-              borderWidth: '1px',
-              borderStyle: 'solid',
-              borderRadius: '4px',
-              padding: '10px',
-              marginBottom: '10px'
-            }}
-          >
-            <br />
-            <Text className="textoInfo"> {reserva.details.spaceName}</Text>
-            <br />
-            <Text><strong>Razón: </strong> {reserva.details.reason}</Text>
-            <br />
-            <Text><strong>Fecha de inicio: </strong> {format(new Date(reserva.details.startDate), "dd/MM/yyyy")}</Text>
-            <br />
-            <Text><strong>Fecha de fin: </strong> {format(new Date(reserva.details.endDate), "dd/MM/yyyy")}</Text>
-            <br />
-            <Text><strong>Estado: </strong> {reserva.details.status}</Text>
-          </div>
-        ))}
-      </div>
-      {reservaciones.length > 0 && (
-        <Pagination
-          current={currentPage}
-          total={reservaciones.length}
-          pageSize={reservationsPerPage}
-          onChange={onPageChange}
-          style={{ marginTop: '20px', textAlign: 'center' }}
-        />
-      )}
-    </>
+    <div style={{ width: '100%', padding: '20px' }}>  
+     
+      <Table
+        columns={columns}
+        dataSource={reservaciones}
+        rowKey={(record) => record.details.reservaId}
+        pagination={{ pageSize: 4 }}
+        rowClassName={rowClassName}
+        
+        
+      />
+    </div>
   );
 };
