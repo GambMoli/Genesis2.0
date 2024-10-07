@@ -28,10 +28,10 @@ export const Home: React.FC = () => {
 
             <Row className="botonesInferior" justify="start"> {/* Gutter reducido */}
               <Col span={12}>
-                <BotonesModulos icon={<MedicineBoxOutlined className="iconsCustom" />} text="Excusas médicas" onClick={() => navigate('/Excusas')} />
+                <BotonesModulos icon={<MedicineBoxOutlined className="iconsCustom" />} text="Excusas médicas" onClick={() => ''} />
               </Col>
               <Col span={12}>
-                <BotonesModulos icon={<SearchOutlined className="iconsCustom" />} text="Pasantías" onClick={() => navigate('/Pasantias')} />
+                <BotonesModulos icon={<SearchOutlined className="iconsCustom" />} text="Pasantías" onClick={() => ''} />
               </Col>
             </Row>
           </Row>
