@@ -1,17 +1,15 @@
-.reservaciones-container {
-    
-    margin: 0 auto;
-    width: 50%;
-    
-}
-.reservacion-item{
-    background-color: #dfdede;
-    margin-bottom: 5%;
-    border: 1px solid #b5b5b5;
-    padding-bottom: 14px;
-}
-.textoInfo{
-    color: black;
-    font-size: 15px;
-    font-weight: bold;
-}
+/* Clase para estado aceptado */
+.row-aceptado {
+    background-color: #e6ffed;  /* Verde claro */
+  }
+  
+  /* Clase para estado pendiente */
+  .row-pendiente {
+    background-color: #fffbe6;  /* Naranja claro */
+  }
+  
+  /* Clase para estado rechazado */
+  .row-rechazado {
+    background-color: #fff1f0;  /* Rojo claro */
+  }
+  

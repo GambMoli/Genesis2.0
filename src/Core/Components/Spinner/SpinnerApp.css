@@ -1,0 +1,21 @@
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: transparent;
+}
+
+.spinner-logo {
+  width: 250px;
+  animation: zoom-in-out 1.5s ease-in-out infinite;
+}
+
+@keyframes zoom-in-out {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}

@@ -1,39 +1,56 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Button, message, Typography } from 'antd';
-import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
+import { Table, Button, message, Typography, Pagination } from 'antd';
+import { CheckOutlined, CloseOutlined, CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import { changeStatus, getListReservas } from "../../../Core/Services/ModulesRequest/EspaciosRequest";
+import { SpinnerApp } from '../../../Core/Components/Spinner';
+import { ModalMessage } from '../../../Core/Components/ModalMessage';
 
 const { Title } = Typography;
 
 interface Reserva {
-  details: {
-    reservaId: number;
-    spaceName: string;
-    userName: string;
-    startDate: string;
-    endDate: string;
-    reason: string;
-    status: string;
-  };
+  reservaId: number;
+  spaceName: string;
+  userName: string;
+  startDate: string;
+  endDate: string;
+  reason: string;
+  status: string;
+}
+
+interface PaginatedData {
+  totalItems: number;
+  currentPage: number;
+  pageSize: number;
+  totalPages: number;
+  data: Reserva[];
 }
 
 interface ApiResponse {
   success: boolean;
-  data: Reserva[];
+  data: PaginatedData;
 }
 
 export const EspaciosAdmin: React.FC = () => {
-  const [reservas, setReservas] = useState<Reserva[]>([]);
+  const [reservas, setReservas] = useState<PaginatedData>({
+    totalItems: 0,
+    currentPage: 1,
+    pageSize: 10,
+    totalPages: 0,
+    data: []
+  });
   const [loading, setLoading] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedReserva, setSelectedReserva] = useState<Reserva | null>(null);
+  const [modalConfig, setModalConfig] = useState<{ title: string; message: string; icon: React.ReactNode; newStatus: string } | null>(null);
 
   useEffect(() => {
-    fetchReservas();
+    fetchReservas(1, 10);
   }, []);
 
-  const fetchReservas = async () => {
+  const fetchReservas = async (page: number, pageSize: number) => {
     setLoading(true);
     try {
-      const response = await getListReservas();
+      const response = await getListReservas(page, pageSize);
       const typedResponse = response as ApiResponse;
       if (typedResponse.success) {
         setReservas(typedResponse.data);
@@ -46,15 +63,40 @@ export const EspaciosAdmin: React.FC = () => {
     }
   };
 
-  const handleStatusChange = async (reservaId: number, newStatus: 'Aceptado' | 'Rechazado') => {
-    try {
-      await changeStatus(reservaId, { newStatus });
-      message.success(`Reservacion ${newStatus.toLowerCase()}`);
-      fetchReservas();
-    } catch (error) {
-      console.error("Error changing status:", error);
-      message.error("Failed to change reservation status");
+  const handleStatusChange = async () => {
+    if (selectedReserva && modalConfig) {
+      try {
+        await changeStatus(selectedReserva.reservaId, { newStatus: modalConfig.newStatus });
+        message.success(`Reservación ${modalConfig.newStatus.toLowerCase()}`);
+        fetchReservas(reservas.currentPage, reservas.pageSize);
+      } catch (error) {
+        console.error("Error changing status:", error);
+        message.error("Failed to change reservation status");
+      } finally {
+        setModalVisible(false);
+      }
     }
+  };
+
+  const showModal = (reserva: Reserva, newStatus: 'Aceptado' | 'Rechazado') => {
+    const config = {
+      Aceptado: {
+        title: "Confirmar aceptación",
+        message: "¿Estás seguro de aceptar esta reserva?",
+        icon: <CheckCircleOutlined style={{ fontSize: '48px', color: '#52c41a' }} />,
+        newStatus: 'Aceptado',
+      },
+      Rechazado: {
+        title: "Confirmar rechazo",
+        message: "¿Estás seguro de rechazar esta reserva?",
+        icon: <CloseCircleOutlined style={{ fontSize: '48px', color: '#f5222d' }} />,
+        newStatus: 'Rechazado por admin'
+      }
+    }[newStatus];
+
+    setModalConfig(config);
+    setSelectedReserva(reserva);
+    setModalVisible(true);
   };
 
   const formatDate = (dateString: string) => {
@@ -68,22 +110,22 @@ export const EspaciosAdmin: React.FC = () => {
   };
 
   const columns = [
-    { title: 'Espacio', dataIndex: ['details', 'spaceName'], key: 'spaceName' },
-    { title: 'Nombre reservador', dataIndex: ['details', 'userName'], key: 'userName' },
+    { title: 'Espacio', dataIndex: 'spaceName', key: 'spaceName' },
+    { title: 'Nombre reservador', dataIndex: 'userName', key: 'userName' },
     {
       title: 'Fecha de inicio',
-      dataIndex: ['details', 'startDate'],
+      dataIndex: 'startDate',
       key: 'startDate',
       render: (date: string) => formatDate(date)
     },
     {
       title: 'Fecha fin',
-      dataIndex: ['details', 'endDate'],
+      dataIndex: 'endDate',
       key: 'endDate',
       render: (date: string) => formatDate(date)
     },
-    { title: 'Razon', dataIndex: ['details', 'reason'], key: 'reason' },
-    { title: 'Estado', dataIndex: ['details', 'status'], key: 'status' },
+    { title: 'Razon', dataIndex: 'reason', key: 'reason' },
+    { title: 'Estado', dataIndex: 'status', key: 'status' },
     {
       title: 'Acciones',
       key: 'actions',
@@ -92,32 +134,59 @@ export const EspaciosAdmin: React.FC = () => {
           <Button
             type="primary"
             icon={<CheckOutlined />}
-            onClick={() => handleStatusChange(record.details.reservaId, 'Aceptado')}
-            disabled={record.details.status !== 'pendiente'}
+            onClick={() => showModal(record, 'Aceptado')}
+            disabled={record.status !== 'pendiente'}
             style={{ marginRight: 8 }}
           />
           <Button
             danger
             icon={<CloseOutlined />}
-            onClick={() => handleStatusChange(record.details.reservaId, 'Rechazado')}
-            disabled={record.details.status !== 'pendiente'}
+            onClick={() => showModal(record, 'Rechazado')}
+            disabled={record.status !== 'pendiente'}
           />
         </>
       ),
     },
   ];
 
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh' }}>
+        <SpinnerApp />
+      </div>
+    );
+  }
+
   return (
     <div style={{ width: "80%", margin: "auto", padding: "20px" }}>
       <Title style={{ fontSize: "24px" }}>
         Reservas de espacios
       </Title>
-      <Table
-        columns={columns}
-        dataSource={reservas}
-        rowKey={(record) => record.details.reservaId}
-        loading={loading}
-      />
+      <>
+        <Table
+          columns={columns}
+          dataSource={reservas.data}
+          rowKey={(record) => record.reservaId}
+          pagination={false}
+        />
+        <Pagination
+          total={reservas.totalItems}
+          current={reservas.currentPage}
+          pageSize={reservas.pageSize}
+          onChange={(page, pageSize) => fetchReservas(page, pageSize)}
+          style={{ marginTop: '20px', textAlign: 'right' }}
+        />
+      </>
+      {modalConfig && (
+        <ModalMessage
+          visible={modalVisible}
+          onOk={handleStatusChange}
+          onCancel={() => setModalVisible(false)}
+          icon={modalConfig.icon}
+          title={modalConfig.title}
+          message={modalConfig.message}
+        />
+      )}
     </div>
   );
 };
