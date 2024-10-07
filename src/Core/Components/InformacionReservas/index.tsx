@@ -14,7 +14,7 @@ interface PaginatedData {
   data: ReservaResponse[];
 }
 
-export const InformacionReserva: React.FC = () => {
+export const InformacionReserva: React.FC<{ onEdit: (reservaId: number) => void }> = ({ onEdit }) => {
   const [reservaciones, setReservaciones] = useState<PaginatedData>({
     totalItems: 0,
     currentPage: 1,
@@ -59,8 +59,9 @@ export const InformacionReserva: React.FC = () => {
   }, []);
 
   const handleModify = (reservaId: number) => {
-    message.info(`Modificar reserva con ID: ${reservaId}`);
+    onEdit(reservaId);
   };
+
 
   const handleDelete = (reservaId: number) => {
     message.info(`Eliminar reserva con ID: ${reservaId}`);
