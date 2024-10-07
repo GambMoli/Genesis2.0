@@ -4,33 +4,34 @@ import { ReadOutlined, MessageOutlined, ProductOutlined, BookOutlined, MedicineB
 import './StylePrincipalPage.css';
 import { BotonesModulos } from '../../Core/Components/BotonesModulos';
 import { TablaInformacion } from '../../Core/Components/TablaPrincipalPage';
-import { Footer } from '../../Core/Components';
+import { useNavigate } from 'react-router-dom';
+
 
 const { Paragraph } = Typography;
 export const Home: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <>
+
       <div className='MainContainer'>
         <Row className="ContenedorPrincipal">
           <Row className="SeccionBotones">
-            <Row className="botonesSuperior" gutter={[16, 16]} justify="start">
-              <Col span={8}>
-                <BotonesModulos icon={<MessageOutlined className="iconsCustom" />} text="Mensajeria" />
+            <Row className="botonesSuperior" justify="start">
+              <Col span={12}>
+                <BotonesModulos icon={<ProductOutlined className="iconsCustom" />} text="Espacios" onClick={() => navigate('/Espacios')} />
               </Col>
-              <Col span={8}>
-                <BotonesModulos icon={<ProductOutlined className="iconsCustom" />} text="Espacios" />
-              </Col>
-              <Col span={8}>
-                <BotonesModulos icon={<BookOutlined className="iconsCustom" />} text="Biblioteca" />
+              <Col span={12}>
+                <BotonesModulos icon={<BookOutlined className="iconsCustom" />} text="Biblioteca" onClick={() => navigate('/Biblioteca')} />
               </Col>
             </Row>
 
             <Row className="botonesInferior" justify="start"> {/* Gutter reducido */}
-              <Col span={8}>
-                <BotonesModulos icon={<MedicineBoxOutlined className="iconsCustom" />} text="Excusas médicas" />
+              <Col span={12}>
+                <BotonesModulos icon={<MedicineBoxOutlined className="iconsCustom" />} text="Excusas médicas" onClick={() => ''} />
               </Col>
-              <Col span={8}>
-                <BotonesModulos icon={<SearchOutlined className="iconsCustom" />} text="Pasantías" />
+              <Col span={12}>
+                <BotonesModulos icon={<SearchOutlined className="iconsCustom" />} text="Pasantías" onClick={() => ''} />
               </Col>
             </Row>
           </Row>
@@ -55,7 +56,7 @@ export const Home: React.FC = () => {
                 }
               >
                 <Paragraph className='Parrafos'>
-                  Se han agregado 5 nuevos módulos a Génesis para mejorar la experiencia del usuario. Estos incluyen: "Mensajería", que permite a los estudiantes comunicarse con profesores y personal administrativo; "Reserva de espacios", para gestionar la reserva de espacios dentro de la universidad; "Biblioteca", que facilita la reserva y préstamo de libros; "Excusas médicas", que permite enviar excusas médicas directamente a los responsables; y "Pasantías", que ofrece opciones para encontrar y gestionar pasantías.
+                  Se han agregado 4 nuevos módulos a Génesis para mejorar la experiencia del usuario. Estos incluyen: "Mensajería", que permite a los estudiantes comunicarse con profesores y personal administrativo; "Reserva de espacios", para gestionar la reserva de espacios dentro de la universidad; "Biblioteca", que facilita la reserva y préstamo de libros; "Excusas médicas", que permite enviar excusas médicas directamente a los responsables; y "Pasantías", que ofrece opciones para encontrar y gestionar pasantías.
                 </Paragraph>
               </Card>
             </Col>
@@ -64,7 +65,6 @@ export const Home: React.FC = () => {
         </Row>
       </div>
 
-      <Footer />
     </>
 
 
