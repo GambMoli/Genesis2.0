@@ -9,8 +9,6 @@ import { ExcusasAdmin } from './Modules';
 import { Pasantias } from './Modules';
 
 const App: React.FC = () => {
-
-
   const getUserRoleFromLocalStorage = (): string | null => {
     const userString = localStorage.getItem('user');
     if (userString) {
@@ -26,12 +24,9 @@ const App: React.FC = () => {
       return role;
     };
 
-
     checkUserRole();
 
-
     const intervalId = setInterval(checkUserRole, 1000);
-
 
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === 'user') {
@@ -57,6 +52,17 @@ const App: React.FC = () => {
     }
   };
 
+  const ExcusasRoute = () => {
+    const currentRole = getUserRoleFromLocalStorage();
+    if (currentRole === "Administrativo") {
+      return <ExcusasAdmin />;
+    } else if (currentRole) {
+      return <Excusas />;
+    } else {
+      return <Navigate to="/" />;
+    }
+  };
+
   return (
     <Router>
       <Header />
@@ -65,8 +71,7 @@ const App: React.FC = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/Biblioteca" element={<Biblioteca />} />
         <Route path="/Espacios" element={<EspaciosRoute />} />
-        <Route path="/Excusas" element={<Excusas />} />
-        <Route path="/ExcusasAdmin" element={<ExcusasAdmin />} />
+        <Route path="/Excusas" element={<ExcusasRoute />} />
         <Route path="/Pasantias" element={<Pasantias />} />
       </Routes>
       <Footer />
