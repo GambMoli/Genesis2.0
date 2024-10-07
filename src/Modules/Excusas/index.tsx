@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react';
-import { Input, Button, Typography, Row, Col, Card, Space, Table, Modal, Form, Select, DatePicker, Upload, message} from 'antd';
-import { FilePdfOutlined, PlusOutlined, UploadOutlined, SearchOutlined } from '@ant-design/icons';
+import { Input, Button, Typography, Card, Table, Modal, Form, Select, DatePicker, Upload, message } from 'antd';
+import { FilePdfOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import "./ExcusasStyle.css"
 
 const { Title } = Typography;
@@ -100,7 +101,7 @@ export const Excusas: React.FC = () => {
           <Table dataSource={excusas} columns={columns} rowKey="id" />
         </Card>
       </div>
-      
+
 
       <Modal
         title="Agregar Excusa Médica"

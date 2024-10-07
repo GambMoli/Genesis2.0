@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Typography, Card, Table, Modal, message,Space} from 'antd';
+import { Button, Typography, Card, Table, Modal, message, Space } from 'antd';
 import { DownloadOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import "./ExcusasAdStyle.css"
 
@@ -42,9 +42,9 @@ export const ExcusasAdmin: React.FC = () => {
 
   const handleConfirm = () => {
     if (selectedExcusa && action) {
-      const updatedExcusas: ExcusaMedica[] = excusas.map(excusa => 
-        excusa.id === selectedExcusa.id 
-          ? { ...excusa, estado: action === 'aceptar' ? 'Aceptada' : 'Rechazada' } 
+      const updatedExcusas: ExcusaMedica[] = excusas.map(excusa =>
+        excusa.id === selectedExcusa.id
+          ? { ...excusa, estado: action === 'aceptar' ? 'Aceptada' : 'Rechazada' }
           : excusa
       );
       setExcusas(updatedExcusas);
@@ -92,25 +92,25 @@ export const ExcusasAdmin: React.FC = () => {
     {
       title: 'Acciones',
       key: 'acciones',
-      render: (_: any, record: ExcusaMedica) => (
+      render: (_: unknown, record: ExcusaMedica) => (
         <Space size="middle">
-          <Button 
-            icon={<DownloadOutlined />} 
+          <Button
+            icon={<DownloadOutlined />}
             onClick={handleDownload}
           >
             Ver PDF
           </Button>
-          <Button 
-            type="primary" 
-            icon={<CheckOutlined />} 
+          <Button
+            type="primary"
+            icon={<CheckOutlined />}
             onClick={() => showModal(record, 'aceptar')}
             disabled={record.estado !== 'Pendiente'}
           >
             Aceptar
           </Button>
-          <Button 
-            danger 
-            icon={<CloseOutlined />} 
+          <Button
+            danger
+            icon={<CloseOutlined />}
             onClick={() => showModal(record, 'rechazar')}
             disabled={record.estado !== 'Pendiente'}
           >
