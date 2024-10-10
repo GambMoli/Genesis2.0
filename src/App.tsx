@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import { Login, Home } from './Modules';
+import { Login, Home, TablaHistorialBiblioteca } from './Modules';
 import { Header, Footer } from './Core/Components';
 import { EspaciosStudent, EspaciosAdmin } from './Modules/Espacios';
 import { Biblioteca } from './Modules';
 import { Excusas } from './Modules';
 import { ExcusasAdmin } from './Modules';
 import { Pasantias } from './Modules';
+
 
 const App: React.FC = () => {
   const getUserRoleFromLocalStorage = (): string | null => {
@@ -73,6 +74,7 @@ const App: React.FC = () => {
         <Route path="/Espacios" element={<EspaciosRoute />} />
         <Route path="/Excusas" element={<ExcusasRoute />} />
         <Route path="/Pasantias" element={<Pasantias />} />
+        <Route path="/HistorialBiblioteca" element={<TablaHistorialBiblioteca />} />
       </Routes>
       <Footer />
     </Router>

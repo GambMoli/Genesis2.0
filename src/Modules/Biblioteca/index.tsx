@@ -7,6 +7,7 @@ import './BibliotecaStyle.css';
 import { Reserva } from '../../Core/Components/ModalReserva';
 import { getBooks } from '../../Core/Services/ModulesRequest/BibliotecaRequest';
 import { SpinnerApp } from '../../Core/Components/Spinner';
+import { useNavigate } from 'react-router-dom';
 
 const { Search } = Input;
 const { Title, Text, Link } = Typography;
@@ -22,6 +23,7 @@ interface Book {
 }
 
 export const Biblioteca: React.FC = () => {
+  const navigate = useNavigate();
   const [books, setBooks] = useState<Book[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalBooks, setTotalBooks] = useState(0);
@@ -51,6 +53,10 @@ export const Biblioteca: React.FC = () => {
     setCurrentPage(page);
   };
 
+  const navigateHistorial = () => {
+    navigate('/HistorialBiblioteca')
+  }
+
   return (
     <div className='MainContainerBiblioteca'>
       <div className='ContenedorBiblioteca'>
@@ -63,7 +69,7 @@ export const Biblioteca: React.FC = () => {
           />
         </div>
         <div className='Reservas'>
-          <Button type="primary" size="large" style={{ backgroundColor: '#28537e' }}>Ver Historial</Button>
+          <Button type="primary" size="large" style={{ backgroundColor: '#28537e' }} onClick={navigateHistorial}>Ver Historial</Button>
         </div>
       </div>
       <div className='Libros'>
