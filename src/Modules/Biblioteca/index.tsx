@@ -1,72 +1,113 @@
-import React from 'react';
-import { Input, Button, Typography, Row, Col, Card, Space, } from 'antd';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import React, { useState, useEffect } from 'react';
+import { Input, Button, Typography, Row, Col, Card, Space, Pagination, message } from 'antd';
 import { FilePdfOutlined } from '@ant-design/icons';
 import './BibliotecaStyle.css';
 import { Reserva } from '../../Core/Components/ModalReserva';
+import { getBooks } from '../../Core/Services/ModulesRequest/BibliotecaRequest';
+import { SpinnerApp } from '../../Core/Components/Spinner';
 
 const { Search } = Input;
-const { Title, Text,Link} = Typography;
+const { Title, Text, Link } = Typography;
+
+interface Book {
+  id: number;
+  nombre: string;
+  autor: string;
+  imagen: string;
+  pdf_blob: string;
+  descripcion: string;
+  disponible: number;
+}
 
 export const Biblioteca: React.FC = () => {
+  const [books, setBooks] = useState<Book[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalBooks, setTotalBooks] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const pageSize = 8;
 
-  const books = [
-    { id: 1, title: "Codigo Limpio", imageUrl: "https://image.cdn1.buscalibre.com/574bdd57a4da2bb0418b4567.__RS360x360__.jpg", isPdfAvailable: true ,url:'https://elhacker.info/manuales/Lenguajes%20de%20Programacion/Codigo%20limpio%20-%20Robert%20Cecil%20Martin.pdf'},
-    { id: 2, title: "El limpador de codigo", imageUrl: "https://m.media-amazon.com/images/I/71pLkmX3xiL._SY466_.jpg", isPdfAvailable: false },
-    { id: 3, title: "Curso de Programación", imageUrl: "https://m.media-amazon.com/images/I/41QZlp5HvaL._SY445_SX342_.jpg", isPdfAvailable: true ,url:'https://www.bibliadelprogramador.com/2016/07/fundamentos-de-programacion-para.html'},
-    { id: 4, title: "Programación Python", imageUrl: "https://m.media-amazon.com/images/I/61IFdPA+sLL._SY466_.jpg", isPdfAvailable: false },
-    { id: 5, title: "Curso de Java", imageUrl: "https://m.media-amazon.com/images/I/41sNkwAz+FL._SY445_SX342_.jpg", isPdfAvailable: true, url:'https://anayamultimedia.es/libro/manuales-imprescindibles/curso-de-programacion-java-mariona-nadal-9788441543249/' },
-    { id: 6, title: "Curso React", imageUrl: "https://m.media-amazon.com/images/I/41iWaCDPICL._SX342_SY445_.jpg", isPdfAvailable: false },
-    { id: 7, title: "Libro 3", imageUrl: "https://m.media-amazon.com/images/I/61tXxIFVJuL._SY445_SX342_.jpg", isPdfAvailable: true },
-    { id: 8, title: "Libro 4", imageUrl: "https://m.media-amazon.com/images/I/41eXGpjXJ5L._SY445_SX342_.jpg", isPdfAvailable: false },
-    
-  ];
+  useEffect(() => {
+    fetchBooks();
+  }, [currentPage]);
+
+  const fetchBooks = async () => {
+    setLoading(true);
+    try {
+      const response = await getBooks(currentPage, pageSize);
+      //@ts-ignore
+      setBooks(response.books);
+      //@ts-ignore
+      setTotalBooks(response.total);
+    } catch (error) {
+      message.error('Failed to fetch books');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
 
   return (
     <div className='MainContainerBiblioteca'>
       <div className='ContenedorBiblioteca'>
         <div className='SearchBox'>
-        <Search
+          <Search
             placeholder="Buscar en la biblioteca"
             allowClear
-            enterButton={<Button className="custom-search-button" style={{backgroundColor:'#28537e',color:'white',fontWeight:'bold'}}>Buscar</Button>}
+            enterButton={<Button className="custom-search-button" style={{ backgroundColor: '#28537e', color: 'white', fontWeight: 'bold' }}>Buscar</Button>}
             size="large"
-        />
+          />
         </div>
         <div className='Reservas'>
-          <Button type="primary" size="large" style={{ backgroundColor:'#28537e'}}>Ver Historial</Button>
+          <Button type="primary" size="large" style={{ backgroundColor: '#28537e' }}>Ver Historial</Button>
         </div>
       </div>
       <div className='Libros'>
         <Title>Libros disponibles en Biblioteca</Title>
-        <br></br>
-        <Row gutter={[40, 40]} justify="center">
-          {books.map(book => (
-            <Col key={book.id}>
-              <Card
-                hoverable
-                className="book-card"
-                cover={<img alt={book.title} src={book.imageUrl} className="book-image" />}
-              >
-                <Space direction="vertical" size="small" className="book-content">
-                  <Title level={4}>{book.title}</Title>
-                  <Reserva></Reserva>
-                  <Text type="secondary" className="pdf-availability">
-                    {book.isPdfAvailable ? (
-                      <>
-                       <Link href={book.url} target="_blank" rel="noopener noreferrer">
-                        <FilePdfOutlined /> PDF disponible
-                      </Link>
-
-                      </>
-                    ) : (
-                      'PDF no disponible'
-                    )}
-                  </Text>
-                </Space>
-              </Card>
-            </Col>
-          ))}
-        </Row>
+        <br />
+        {loading ? (
+          <SpinnerApp />
+        ) : (
+          <>
+            <Row gutter={[40, 40]} justify="center">
+              {books.map(book => (
+                <Col key={book.id}>
+                  <Card
+                    hoverable
+                    className="book-card"
+                    cover={<img alt={book.nombre} src={book.imagen} className="book-image" />}
+                  >
+                    <Space direction="vertical" size="small" className="book-content">
+                      <Title level={4}>{book.nombre}</Title>
+                      <Text>{book.autor}</Text>
+                      <Reserva bookId={book.id} />
+                      <Text type="secondary" className="pdf-availability">
+                        {book.pdf_blob ? (
+                          <Link href={book.pdf_blob} target="_blank" rel="noopener noreferrer">
+                            <FilePdfOutlined /> PDF disponible
+                          </Link>
+                        ) : (
+                          'PDF no disponible'
+                        )}
+                      </Text>
+                    </Space>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+            <Pagination
+              current={currentPage}
+              total={totalBooks}
+              pageSize={pageSize}
+              onChange={handlePageChange}
+              style={{ marginTop: '20px', textAlign: 'center' }}
+            />
+          </>
+        )}
       </div>
     </div>
   );
