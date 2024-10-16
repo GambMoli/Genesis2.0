@@ -3,8 +3,11 @@ import { Table, Button, message, Tooltip } from "antd";
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import './styleHistorial.css';
 import { SpinnerApp } from "../Spinner";
-import { GetHistorialReservaciones, DetailsReserva } from "../../Services/ModulesRequest/BibliotecaRequest";
+import { GetHistorialReservaciones, DetailsReserva, updateReserveStatus } from "../../Services/ModulesRequest/BibliotecaRequest";
 import { format } from 'date-fns';
+
+import { ModalMessage } from "../ModalMessage";
+
 
 interface PaginatedData {
   totalItems: number;
@@ -83,12 +86,66 @@ export const HistorialReservacionesBiblioteca: React.FC<{ onEdit: (reservaId: nu
     fetchReserva(pagination.current, pagination.pageSize);
   };
 
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedReservaId, setSelectedReservaId] = useState<number | null>(null);
+
+
+  const handleDelete = (reservaId: number) => {
+    setSelectedReservaId(reservaId); 
+    setModalVisible(true); 
+  };
+
+  const confirmDelete = async () => {
+    if (selectedReservaId) {
+      console.log("selectedReservaId:", selectedReservaId);
+  
+      try {
+        const response = await updateReserveStatus(selectedReservaId, { newStatus: "cancelado" });
+        console.log("Respuesta completa de la API:", response);
+        if (response) {
+          message.success('Reserva cancelada correctamente');
+          fetchReserva(reservaciones.currentPage, reservaciones.pageSize); // Refrescar los datos después de la cancelación
+        } else {
+          throw new Error( 'Error al cancelar la reserva');
+        }
+      } catch (error) {
+        console.error('Error al cancelar la reserva:', error);
+        message.error('Error al cancelar la reserva');
+      } finally {
+        setModalVisible(false); 
+        setSelectedReservaId(null); 
+      }
+    }
+  };
+  
+  
+  
+  const cancelDelete = () => {
+    setModalVisible(false); 
+    setSelectedReservaId(null); 
+  };
+
+  const rowClassName = (record: DetailsReserva) => {
+    switch (record.estado.toLowerCase()) {
+      case 'aceptado':
+        return 'row-aceptado';
+      case 'pendiente':
+        return 'row-pendiente';
+      case 'rechazado':
+        return 'row-rechazado';
+      case 'cancelado':
+        return 'row-cancelado';
+      default:
+        return '';
+    }
+  };
+
   const columns = [
     {
       title: 'Libro',
       dataIndex: 'libro_nombre',
       key: 'libro_nombre',
-      render: (text: string) => text, // Simplemente devolver el texto
+      render: (text: string) => text, 
     },
     {
       title: 'Autor',
@@ -127,7 +184,9 @@ export const HistorialReservacionesBiblioteca: React.FC<{ onEdit: (reservaId: nu
             />
           </Tooltip>
           <Tooltip title="Eliminar">
-            <Button icon={<DeleteOutlined />} danger />
+            <Button icon={<DeleteOutlined />} 
+            onClick={()=>handleDelete(record.reserva_id)}
+            danger />
           </Tooltip>
         </div>
       ),
@@ -149,9 +208,18 @@ export const HistorialReservacionesBiblioteca: React.FC<{ onEdit: (reservaId: nu
           }}
           onChange={handleTableChange}
           rowKey="reserva_id"
+          rowClassName={rowClassName}
           style={{ width: '100%', margin: '0 auto' ,marginTop:'30px'}}      
         />
       )}
+
+      <ModalMessage
+        visible={modalVisible}
+        onOk={confirmDelete}
+        onCancel={cancelDelete}
+        title="Confirmar cancelación"
+        message="¿Estás seguro de que deseas cancelar esta reserva?"
+      />
     </div>
   );
 };

@@ -1,3 +1,19 @@
 .historial-reservaciones{
     width: 80%;
 }
+.row-aceptado {
+    background-color: #e6f7ff;
+  }
+  
+  .row-pendiente {
+    background-color: #fffbe6;
+  }
+  
+  .row-rechazado {
+    background-color: #fff1f0;
+  }
+  
+  .row-cancelado {
+    background-color: #f0f0f0;
+  }
+  

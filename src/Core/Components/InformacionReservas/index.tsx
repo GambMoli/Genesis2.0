@@ -5,6 +5,8 @@ import { format } from 'date-fns';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import './styleInformacion.css';
 import { SpinnerApp } from "../Spinner";
+import { changeStatus } from "../../Services/ModulesRequest/EspaciosRequest";
+import { ModalMessage } from '../ModalMessage';
 
 interface PaginatedData {
   totalItems: number;
@@ -23,6 +25,10 @@ export const InformacionReserva: React.FC<{ onEdit: (reservaId: number) => void 
     data: []
   });
   const [loading, setLoading] = useState(true);
+  
+  
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedReservaId, setSelectedReservaId] = useState<number | null>(null);
 
   const fetchReserva = async (page: number, pageSize: number) => {
     setLoading(true);
@@ -62,11 +68,36 @@ export const InformacionReserva: React.FC<{ onEdit: (reservaId: number) => void 
     onEdit(reservaId);
   };
 
-
   const handleDelete = (reservaId: number) => {
-    message.info(`Eliminar reserva con ID: ${reservaId}`);
+    setSelectedReservaId(reservaId); 
+    setModalVisible(true); 
   };
 
+ 
+  const confirmDelete = async () => {
+    if (selectedReservaId) {
+      try {
+        const response = await changeStatus(selectedReservaId, { newStatus: "cancelado" });
+        if (response) {
+          message.success('Reserva cancelada correctamente');
+          fetchReserva(reservaciones.currentPage, reservaciones.pageSize); 
+        } else {
+          throw new Error('Error al cancelar la reserva');
+        }
+      } catch (error) {
+        console.error('Error al cancelar la reserva:', error);
+        message.error('Error al cancelar la reserva');
+      } finally {
+        setModalVisible(false); 
+        setSelectedReservaId(null); 
+      }
+    }
+  };
+
+  const cancelDelete = () => {
+    setModalVisible(false); 
+    setSelectedReservaId(null); 
+  };
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -81,6 +112,8 @@ export const InformacionReserva: React.FC<{ onEdit: (reservaId: number) => void 
         return 'row-pendiente';
       case 'rechazado':
         return 'row-rechazado';
+      case 'cancelado':
+        return 'row-cancelado';
       default:
         return '';
     }
@@ -106,32 +139,33 @@ export const InformacionReserva: React.FC<{ onEdit: (reservaId: number) => void 
       title: 'Acciones',
       key: 'actions',
       render: (record: ReservaResponse) => {
-        const isDisabled = record.status.toLowerCase() !== 'pendiente';
+        const isEditDisabled = record.status.toLowerCase() !== 'pendiente';
+        const isCancelDisabled = record.status.toLowerCase() === 'cancelado'; 
         return (
           <div style={{ display: 'flex', gap: '10px' }}>
-            <Tooltip title={isDisabled ? "No se puede editar" : "Editar"}>
+            <Tooltip title={isEditDisabled ? "No se puede editar" : "Editar"}>
               <Button
                 type="primary"
                 icon={<EditOutlined />}
                 onClick={() => handleModify(record.reservaId)}
-                disabled={isDisabled}
+                disabled={isEditDisabled}
                 style={{
-                  backgroundColor: isDisabled ? '#d9d9d9' : '#28537e',
-                  color: isDisabled ? 'rgba(0, 0, 0, 0.25)' : 'white',
+                  backgroundColor: isEditDisabled ? '#d9d9d9' : '#28537e',
+                  color: isEditDisabled ? 'rgba(0, 0, 0, 0.25)' : 'white',
                   border: 'none',
                 }}
               />
             </Tooltip>
-            {/* Botón de eliminar siempre habilitado */}
-            <Tooltip title="Eliminar">
+            <Tooltip title={isCancelDisabled ? "No se puede cancelar" : "Cancelar"}>
               <Button
                 type="primary"
                 icon={<DeleteOutlined />}
                 onClick={() => handleDelete(record.reservaId)}
+                disabled={isCancelDisabled}
                 danger
                 style={{
-                  backgroundColor: '#ff4d4f',
-                  color: 'white',
+                  backgroundColor: isCancelDisabled ? '#d9d9d9' : '#ff4d4f',
+                  color: isCancelDisabled ? 'rgba(0, 0, 0, 0.25)' : 'white',
                   border: 'none',
                 }}
               />
@@ -141,7 +175,6 @@ export const InformacionReserva: React.FC<{ onEdit: (reservaId: number) => void 
       },
     },
   ];
-
 
   if (loading) {
     return (
@@ -164,6 +197,15 @@ export const InformacionReserva: React.FC<{ onEdit: (reservaId: number) => void 
           onChange: (page, pageSize) => fetchReserva(page, pageSize),
         }}
         rowClassName={rowClassName}
+      />
+
+      
+      <ModalMessage
+        visible={modalVisible}
+        onOk={confirmDelete}
+        onCancel={cancelDelete}
+        title="Confirmar cancelación"
+        message="¿Estás seguro de que deseas cancelar esta reserva?"
       />
     </div>
   );

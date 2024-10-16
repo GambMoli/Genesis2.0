@@ -1,4 +1,4 @@
-import { GET, POST } from "../../request";
+import { GET, POST, PUT } from "../../request";
 
 interface reserveBook {
   bookId: number,
@@ -29,7 +29,7 @@ export const getBooks = async (page: number, pageSize: number) => {
   return response
 }
 
-// Define la interfaz para una reserva
+
 export interface DetailsReserva {
   reserva_id: number;
   libro_nombre: string;
@@ -39,18 +39,26 @@ export interface DetailsReserva {
   estado: string;
 }
 
-// Define la interfaz para la respuesta de la API
 export interface ApiResponse {
   success: boolean;
   data: {
-    reservations: DetailsReserva[]; // Cambiado para reflejar que ahora hay un array 'reservations'
-    totalItems: number;              // Total de elementos
-    totalPages: number;              // Total de páginas
+    reservations: DetailsReserva[]; 
+    totalItems: number;              
+    totalPages: number;              
   };
 }
 
-// Función para obtener el historial de reservaciones
+
 export const GetHistorialReservaciones = async (id: number, page: number, pageSize: number): Promise<ApiResponse> => {
   const response = await GET<ApiResponse>(`/library/history/${id}?page=${page}&pageSize=${pageSize}`);
   return response;
 };
+
+interface changeStatus {
+  newStatus: string
+}
+export const updateReserveStatus = async (id: number, data: changeStatus) => {
+  const response = await PUT<changeStatus>(`/library/reservations/${id}`, data);
+  return response;
+};
+

@@ -12,4 +12,8 @@
   .row-rechazado {
     background-color: #fff1f0;  /* Rojo claro */
   }
+
+  .row-cancelado{
+    background-color: rgb(254, 239, 211);
+  }
   
