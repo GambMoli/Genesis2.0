@@ -42,9 +42,9 @@ export interface DetailsReserva {
 export interface ApiResponse {
   success: boolean;
   data: {
-    reservations: DetailsReserva[]; 
-    totalItems: number;              
-    totalPages: number;              
+    reservations: DetailsReserva[];
+    totalItems: number;
+    totalPages: number;
   };
 }
 
@@ -62,23 +62,46 @@ export const updateReserveStatus = async (id: number, data: changeStatus) => {
   return response;
 };
 
-interface dataReservation{
+interface dataReservation {
   userId: number,
   newStartDate: string,
   newEndDate: string
 }
 
-export const modifyReserve = async (id: number, data:dataReservation )=> {
+export const modifyReserve = async (id: number, data: dataReservation) => {
   const response = await PUT<dataReservation>(`/library/reservations/${id}/modify`, data);
   return response;
 }
 
-export const  getallReservations = async(page: number, pageSize: number ): Promise<ApiResponse>=>{
-  const response = await GET<ApiResponse>(`/library/all-reservations?page=${page}&pageSize=${pageSize}`); 
+export const getallReservations = async (page: number, pageSize: number): Promise<ApiResponse> => {
+  const response = await GET<ApiResponse>(`/library/all-reservations?page=${page}&pageSize=${pageSize}`);
   return response;
 }
 
-export const  getStadisticsReservation = async (libroId:number) =>{
-  const response = await GET(`/library/${libroId}/estadisticas`);
+export interface BookStats {
+  nombre: string;
+  autor: string;
+  descripcion: string;
+  availability: string;
+  createdAt: string;
+  imagen: string;
+  reservationCount: number;
+  uniqueUsers: number;
+  totalReservationTimeHours: number;
+  lastReservation: string;
+  lastReservationUser: string;
+  currentReservation: boolean;
+  upcomingReservationsCount: number;
+  averageReservationDurationHours: number;
+  mostFrequentUser: {
+    userId: string;
+    name: string;
+    reservationCount: number;
+  };
+}
+
+
+export const getStadisticsReservation = async (libroId: number) => {
+  const response = await GET<BookStats>(`/library/${libroId}/estadisticas`);
   return response;
 }

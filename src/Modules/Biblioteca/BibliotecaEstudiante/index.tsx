@@ -5,7 +5,7 @@ import { Input, Button, Typography, Row, Col, Card, Space, Pagination, message }
 import { FilePdfOutlined } from '@ant-design/icons';
 import './BibliotecaStyle.css';
 import { Reserva } from '../../../Core/Components/ModalReserva';
-import { getBooks} from '../../../Core/Services/ModulesRequest/BibliotecaRequest';
+import { getBooks } from '../../../Core/Services/ModulesRequest/BibliotecaRequest';
 import { SpinnerApp } from '../../../Core/Components/Spinner';
 import { useNavigate } from 'react-router-dom';
 
@@ -77,7 +77,6 @@ export const Biblioteca: React.FC = () => {
   };
 
   const handleStatisticsClick = (bookId: number) => {
-    // Aquí navegas al Dashboard, pasando el bookId como parámetro en la URL si es necesario
     navigate(`/dashboard?bookId=${bookId}`);
   };
 
@@ -93,12 +92,12 @@ export const Biblioteca: React.FC = () => {
           />
         </div>
         <div className='Reservas'>
-        {userRole === 'Profesor' ? (
-          <div></div>
-           ) : (
-              <Button type="primary" size="large" style={{ backgroundColor: '#28537e' }} onClick={navigateHistorial}>Ver Historial</Button>
+          {userRole === 'Profesor' ? (
+            <div></div>
+          ) : (
+            <Button type="primary" size="large" style={{ backgroundColor: '#28537e' }} onClick={navigateHistorial}>Ver Historial</Button>
           )}
-         
+
         </div>
       </div>
       <div className='Libros'>
@@ -119,7 +118,7 @@ export const Biblioteca: React.FC = () => {
                     <Space direction="vertical" size="small" className="book-content">
                       <Title level={4}>{book.nombre}</Title>
                       <Text>{book.autor}</Text>
-                      
+
                       {userRole === 'Profesor' ? (
                         <Button onClick={() => handleStatisticsClick(book.id)} type="primary">
                           Ver Estadísticas

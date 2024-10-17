@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
-import { Table, Button, message, Tooltip,  Modal, Form, DatePicker } from "antd";
+import { Table, Button, message, Tooltip, Modal, Form, DatePicker } from "antd";
 import { EditOutlined, StopOutlined } from '@ant-design/icons';
 import './styleHistorial.css';
 import { SpinnerApp } from "../Spinner";
@@ -83,8 +84,8 @@ export const HistorialReservacionesBiblioteca: React.FC<{ onEdit: (reservaId: nu
   };
 
   const handleDelete = (reservaId: number) => {
-    setSelectedReservaId(reservaId); 
-    setModalVisible(true); 
+    setSelectedReservaId(reservaId);
+    setModalVisible(true);
   };
 
   const confirmDelete = async () => {
@@ -101,20 +102,20 @@ export const HistorialReservacionesBiblioteca: React.FC<{ onEdit: (reservaId: nu
         console.error('Error al cancelar la reserva:', error);
         message.error('Error al cancelar la reserva');
       } finally {
-        setModalVisible(false); 
-        setSelectedReservaId(null); 
+        setModalVisible(false);
+        setSelectedReservaId(null);
       }
     }
   };
 
   const cancelDelete = () => {
-    setModalVisible(false); 
-    setSelectedReservaId(null); 
+    setModalVisible(false);
+    setSelectedReservaId(null);
   };
 
   const handleEdit = (reservaId: number) => {
-    setSelectedReservaId(reservaId); 
-    setEditModalVisible(true); 
+    setSelectedReservaId(reservaId);
+    setEditModalVisible(true);
   };
 
   const editConfirm = async () => {
@@ -137,14 +138,14 @@ export const HistorialReservacionesBiblioteca: React.FC<{ onEdit: (reservaId: nu
       console.error('Error al modificar la reserva:', error);
       message.error('Error al modificar la reserva');
     } finally {
-      setEditModalVisible(false); 
-      setSelectedReservaId(null); 
+      setEditModalVisible(false);
+      setSelectedReservaId(null);
     }
   };
 
   const cancelEdit = () => {
-    setEditModalVisible(false); 
-    setSelectedReservaId(null); 
+    setEditModalVisible(false);
+    setSelectedReservaId(null);
   };
 
   const rowClassName = (record: DetailsReserva) => {
@@ -168,7 +169,7 @@ export const HistorialReservacionesBiblioteca: React.FC<{ onEdit: (reservaId: nu
       title: 'Libro',
       dataIndex: 'libro_nombre',
       key: 'libro_nombre',
-      render: (text: string) => text, 
+      render: (text: string) => text,
     },
     {
       title: 'Autor',
@@ -199,7 +200,7 @@ export const HistorialReservacionesBiblioteca: React.FC<{ onEdit: (reservaId: nu
       key: 'actions',
       render: (_: any, record: DetailsReserva) => {
         const isEditDisabled = record.estado.toLowerCase() !== 'pendiente';
-        const isCancelDisabled = record.estado.toLowerCase() === 'cancelada'; 
+        const isCancelDisabled = record.estado.toLowerCase() === 'cancelada';
         return (
           <div>
             <Tooltip title={isEditDisabled ? "No se puede editar" : "Editar"}>
@@ -218,7 +219,7 @@ export const HistorialReservacionesBiblioteca: React.FC<{ onEdit: (reservaId: nu
             <Tooltip title={isCancelDisabled ? "No se puede cancelar" : "Cancelar"}>
               <Button
                 type="primary"
-                icon={<StopOutlined /> }
+                icon={<StopOutlined />}
                 onClick={() => handleDelete(record.reserva_id)}
                 disabled={isCancelDisabled}
                 danger
@@ -263,31 +264,31 @@ export const HistorialReservacionesBiblioteca: React.FC<{ onEdit: (reservaId: nu
         message="¿Estás seguro de que deseas cancelar esta reserva?"
       />
 
-<Modal
-  visible={editModalVisible}
-  onOk={editConfirm}
-  onCancel={cancelEdit}
-  title="Modificar Reserva"
-  okText="Guardar"
-  cancelText="Cancelar"
->
-  <Form form={editForm}>
-    <Form.Item
-      name="newStartDate"
-      label="Nueva Fecha de Inicio"
-      rules={[{ required: true, message: 'Selecciona la nueva fecha de inicio' }]}
-    >
-      <DatePicker />
-    </Form.Item>
-    <Form.Item
-      name="newEndDate"
-      label="Nueva Fecha de Fin"
-      rules={[{ required: true, message: 'Selecciona la nueva fecha de fin' }]}
-    >
-      <DatePicker />
-    </Form.Item>
-  </Form>
-</Modal>
+      <Modal
+        visible={editModalVisible}
+        onOk={editConfirm}
+        onCancel={cancelEdit}
+        title="Modificar Reserva"
+        okText="Guardar"
+        cancelText="Cancelar"
+      >
+        <Form form={editForm}>
+          <Form.Item
+            name="newStartDate"
+            label="Nueva Fecha de Inicio"
+            rules={[{ required: true, message: 'Selecciona la nueva fecha de inicio' }]}
+          >
+            <DatePicker />
+          </Form.Item>
+          <Form.Item
+            name="newEndDate"
+            label="Nueva Fecha de Fin"
+            rules={[{ required: true, message: 'Selecciona la nueva fecha de fin' }]}
+          >
+            <DatePicker />
+          </Form.Item>
+        </Form>
+      </Modal>
     </div>
   );
 };
