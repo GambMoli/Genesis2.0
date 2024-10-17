@@ -7,10 +7,8 @@ import { Biblioteca } from './Modules';
 import { Excusas } from './Modules';
 import { ExcusasAdmin } from './Modules';
 import { Pasantias } from './Modules';
-import {BibliotecaHistorialAdmin,TablaHistorialBiblioteca} from './Modules/TablaReservaBiblioteca'
+import { BibliotecaHistorialAdmin, TablaHistorialBiblioteca } from './Modules/TablaReservaBiblioteca';
 import { Dashboard } from './Core/Components';
-
-
 
 const App: React.FC = () => {
   const getUserRoleFromLocalStorage = (): string | null => {
@@ -29,9 +27,7 @@ const App: React.FC = () => {
     };
 
     checkUserRole();
-
     const intervalId = setInterval(checkUserRole, 1000);
-
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === 'user') {
         checkUserRole();
@@ -66,17 +62,24 @@ const App: React.FC = () => {
       return <Navigate to="/" />;
     }
   };
-  const   BibliotecaRoute = () => {
+
+  const BibliotecaRoute = () => {
     const currentRole = getUserRoleFromLocalStorage();
     if (currentRole === "Administrativo") {
-      return <BibliotecaHistorialAdmin />;
-    } else if (currentRole) {
-      return <TablaHistorialBiblioteca />;
+      return <BibliotecaHistorialAdmin />; // Show BibliotecaHistorialAdmin for Administrativos
     } else {
-      return <Navigate to="/" />;
+      return <Biblioteca />; // Show Biblioteca for other roles
     }
   };
 
+  const BibliotecaTabla = () => {
+    const currentRole = getUserRoleFromLocalStorage();
+    if (currentRole === "Administrativo") {
+      return <BibliotecaHistorialAdmin />; // Show TablaHistorialBiblioteca for non-Administrativos
+    } else {
+      return <TablaHistorialBiblioteca />; // Redirect Administrativos from this route
+    }
+  };
 
   return (
     <Router>
@@ -84,11 +87,11 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/Biblioteca" element={<Biblioteca />} />
+        <Route path="/Biblioteca" element={<BibliotecaRoute />} />
         <Route path="/Espacios" element={<EspaciosRoute />} />
         <Route path="/Excusas" element={<ExcusasRoute />} />
         <Route path="/Pasantias" element={<Pasantias />} />
-        <Route path="/HistorialBiblioteca" element={<BibliotecaRoute />} />
+        <Route path="/HistorialBiblioteca" element={<BibliotecaTabla />} />
         <Route path="/Dashboard" element={<Dashboard />} />
       </Routes>
       <Footer />

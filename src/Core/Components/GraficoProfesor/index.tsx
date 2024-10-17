@@ -5,7 +5,7 @@ import { getStadisticsReservation } from "../../Services/ModulesRequest/Bibliote
 import { SpinnerApp } from '../Spinner';
 import { BookStats } from '../../Services/ModulesRequest/BibliotecaRequest';
 import { Typography } from 'antd';
-import './grafico.css'; 
+import './grafico.css';
 
 export const Dashboard = () => {
   const [bookStats, setBookStats] = useState<BookStats | null>(null);
@@ -36,9 +36,6 @@ export const Dashboard = () => {
     return dateString ? new Date(dateString).toLocaleDateString() : 'No hay datos disponibles';
   };
 
-  const renderStatistic = (label: string, value: number, unit = '') => (
-    <p>{label}: {value || value === 0 ? `${value}${unit}` : 'No hay datos disponibles'}</p>
-  );
 
   const pieChartOptions = {
     title: {
@@ -73,7 +70,7 @@ export const Dashboard = () => {
   };
 
   const formatAverageDuration = (duration: number) => {
-    return Math.round(duration); 
+    return Math.round(duration);
   };
 
   return (
@@ -82,48 +79,48 @@ export const Dashboard = () => {
 
       <div className="dashboard-container2">
 
-      <div className="dashboard-content ">
-        <div className="dashboard-section">
-          <h2 style={{textAlign: "center"}}>Información del Libro</h2>
-          <img src={bookStats.imagen} alt={bookStats.nombre} className="book-image" />
-          <div className="text-content">
-            <Text strong>Autor: </Text><Text>{bookStats.autor}</Text>
-            <Text strong>Descripcion: </Text><Text>{bookStats.descripcion}</Text>
-            <Text strong>Estado: </Text><Text>{bookStats.availability}</Text>
-            <Text strong>Disponible desde: </Text><Text>{formatDate(bookStats.createdAt)}</Text>
-        </div>
-      </div>
-
-        <div className="dashboard-section" >
-          <h2 style={{textAlign: "center"}}>Reservas y Usuarios Únicos</h2>
-          <ReactEcharts option={pieChartOptions} className="chart-container" />
-        </div>
-
-        <div className="dashboard-section">
-          <h2 style={{textAlign: "center"}}>Estadísticas de Reserva</h2>
-          <div className="text-content">
-            <Text strong>Ultima Reserva: </Text><Text>{formatDate(bookStats.lastReservation)}</Text>
-            <Text strong>Ultimo en Reservar: </Text><Text>{bookStats.lastReservationUser}</Text>
-            <Text strong>Estado Actual: </Text><Text>{bookStats.currentReservation ? 'Sí' : 'No'}</Text>
-            <Text strong>Reservaciones en camino: </Text><Text>{bookStats.upcomingReservationsCount}</Text>
-            <Text strong>Duracion promedio: </Text><Text>{formatAverageDuration(bookStats.averageReservationDurationHours)} horas</Text>
+        <div className="dashboard-content ">
+          <div className="dashboard-section">
+            <h2 style={{ textAlign: "center" }}>Información del Libro</h2>
+            <img src={bookStats.imagen} alt={bookStats.nombre} className="book-image" />
+            <div className="text-content">
+              <Text strong>Autor: </Text><Text>{bookStats.autor}</Text>
+              <Text strong>Descripcion: </Text><Text>{bookStats.descripcion}</Text>
+              <Text strong>Estado: </Text><Text>{bookStats.availability}</Text>
+              <Text strong>Disponible desde: </Text><Text>{formatDate(bookStats.createdAt)}</Text>
+            </div>
           </div>
-        
-        </div>
 
-        <div className="dashboard-section">
-          <h2 style={{textAlign: "center"}}>Usuario Más Frecuente</h2>
-          {bookStats.mostFrequentUser.userId ? (
-            <>
-              <div className="text-content">
-              <Text strong>{bookStats.mostFrequentUser.name}</Text>
-              <Text>Número de Reservas: {bookStats.mostFrequentUser.reservationCount}</Text>
-              </div>
-            </>
-          ) : (
-            <p>No hay datos disponibles para el usuario más frecuente</p>
-          )}
-        </div>
+          <div className="dashboard-section" >
+            <h2 style={{ textAlign: "center" }}>Reservas y Usuarios Únicos</h2>
+            <ReactEcharts option={pieChartOptions} className="chart-container" />
+          </div>
+
+          <div className="dashboard-section">
+            <h2 style={{ textAlign: "center" }}>Estadísticas de Reserva</h2>
+            <div className="text-content">
+              <Text strong>Ultima Reserva: </Text><Text>{formatDate(bookStats.lastReservation)}</Text>
+              <Text strong>Ultimo en Reservar: </Text><Text>{bookStats.lastReservationUser}</Text>
+              <Text strong>Estado Actual: </Text><Text>{bookStats.currentReservation ? 'Sí' : 'No'}</Text>
+              <Text strong>Reservaciones en camino: </Text><Text>{bookStats.upcomingReservationsCount}</Text>
+              <Text strong>Duracion promedio: </Text><Text>{formatAverageDuration(bookStats.averageReservationDurationHours)} horas</Text>
+            </div>
+
+          </div>
+
+          <div className="dashboard-section">
+            <h2 style={{ textAlign: "center" }}>Usuario Más Frecuente</h2>
+            {bookStats.mostFrequentUser.userId ? (
+              <>
+                <div className="text-content">
+                  <Text strong>{bookStats.mostFrequentUser.name}</Text>
+                  <Text>Número de Reservas: {bookStats.mostFrequentUser.reservationCount}</Text>
+                </div>
+              </>
+            ) : (
+              <p>No hay datos disponibles para el usuario más frecuente</p>
+            )}
+          </div>
         </div>
       </div>
     </div>
