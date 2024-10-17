@@ -5,8 +5,9 @@ import { EditOutlined, StopOutlined } from '@ant-design/icons';
 import './styleHistorial.css';
 import { SpinnerApp } from "../Spinner";
 import { GetHistorialReservaciones, DetailsReserva, updateReserveStatus, modifyReserve } from "../../Services/ModulesRequest/BibliotecaRequest";
-import { format } from 'date-fns';
+import { format, parseISO, addDays } from 'date-fns';
 import { ModalMessage } from "../ModalMessage";
+
 
 interface PaginatedData {
   totalItems: number;
@@ -27,9 +28,9 @@ export const HistorialReservacionesBiblioteca: React.FC<{ onEdit: (reservaId: nu
   });
   const [loading, setLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
-  const [editModalVisible, setEditModalVisible] = useState(false); // Nuevo estado para el modal de edición
+  const [editModalVisible, setEditModalVisible] = useState(false);
   const [selectedReservaId, setSelectedReservaId] = useState<number | null>(null);
-  const [editForm] = Form.useForm(); // Formulario de edición
+  const [editForm] = Form.useForm();
 
   const fetchReserva = async (page: number, pageSize: number) => {
     setLoading(true);
@@ -181,13 +182,13 @@ export const HistorialReservacionesBiblioteca: React.FC<{ onEdit: (reservaId: nu
       title: 'Fecha de Inicio',
       dataIndex: 'fecha_inicio',
       key: 'fecha_inicio',
-      render: (text: string) => format(new Date(text), 'dd/MM/yyyy'),
+      render: (text: string) => formatDate(text),
     },
     {
       title: 'Fecha de Fin',
       dataIndex: 'fecha_fin',
       key: 'fecha_fin',
-      render: (text: string) => format(new Date(text), 'dd/MM/yyyy'),
+      render: (text: string) => formatDate(text),
     },
     {
       title: 'Estado',
@@ -235,6 +236,12 @@ export const HistorialReservacionesBiblioteca: React.FC<{ onEdit: (reservaId: nu
       },
     },
   ];
+
+  const formatDate = (dateString: string) => {
+    const date = parseISO(dateString);
+    const adjustedDate = addDays(date, 1);
+    return format(adjustedDate, 'dd/MM/yyyy');
+  };
 
   return (
     <div className="historial-reservaciones">
