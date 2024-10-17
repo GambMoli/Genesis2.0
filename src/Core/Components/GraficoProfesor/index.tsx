@@ -1,19 +1,16 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import ReactEcharts from 'echarts-for-react'; // Importa ReactEcharts para usar ECharts
+import ReactEcharts from 'echarts-for-react';
 import { getStadisticsReservation } from "../../Services/ModulesRequest/BibliotecaRequest";
 import { SpinnerApp } from '../Spinner';
 import { BookStats } from '../../Services/ModulesRequest/BibliotecaRequest';
 import { Typography } from 'antd';
-
+import './grafico.css'; 
 
 export const Dashboard = () => {
   const [bookStats, setBookStats] = useState<BookStats | null>(null);
-
   const location = useLocation();
-
-  const { Text } = Typography
+  const { Text } = Typography;
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -21,7 +18,6 @@ export const Dashboard = () => {
 
     if (bookId) {
       getStadisticsReservation(Number(bookId)).then(data => {
-        //@ts-ignore
         setBookStats(data);
       });
     }
@@ -32,9 +28,7 @@ export const Dashboard = () => {
   }
 
   const reservationData = [
-    //@ts-ignore
     { name: 'Reservas', value: bookStats.reservationCount },
-    //@ts-ignore
     { name: 'Usuarios Únicos', value: bookStats.uniqueUsers },
   ];
 
@@ -46,10 +40,9 @@ export const Dashboard = () => {
     <p>{label}: {value || value === 0 ? `${value}${unit}` : 'No hay datos disponibles'}</p>
   );
 
-
   const pieChartOptions = {
     title: {
-      text: 'Reservas y Usuarios Únicos',
+      text: '',
       left: 'center'
     },
     tooltip: {
@@ -79,69 +72,58 @@ export const Dashboard = () => {
     ]
   };
 
+  const formatAverageDuration = (duration: number) => {
+    return Math.round(duration); 
+  };
+
   return (
-    <div style={{ width: "80%", margin: "0 auto", marginTop: "30px" }}>
-      <h1 style={{ textAlign: "center", marginBottom: "20px" }}>{bookStats.nombre}</h1>
+    <div className="dashboard-container">
+      <h1 className="dashboard-title">{bookStats.nombre}</h1>
 
-      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+      <div className="dashboard-container2">
 
-        <div style={{ width: '40%', marginBottom: '20px', padding: '15px', borderRadius: '8px' }}>
-          <h2>Información del Libro</h2>
-          <img src={bookStats.imagen} alt={bookStats.nombre} style={{ maxWidth: '150px', marginBottom: '10px' }} />
+      <div className="dashboard-content ">
+        <div className="dashboard-section">
+          <h2 style={{textAlign: "center"}}>Información del Libro</h2>
+          <img src={bookStats.imagen} alt={bookStats.nombre} className="book-image" />
+          <div className="text-content">
+            <Text strong>Autor: </Text><Text>{bookStats.autor}</Text>
+            <Text strong>Descripcion: </Text><Text>{bookStats.descripcion}</Text>
+            <Text strong>Estado: </Text><Text>{bookStats.availability}</Text>
+            <Text strong>Disponible desde: </Text><Text>{formatDate(bookStats.createdAt)}</Text>
+        </div>
+      </div>
 
-          <Text>
-            {bookStats.autor}
-          </Text>
-
-          <Text>
-            {bookStats.descripcion}
-          </Text>
-
-          <Text>
-            {bookStats.availability}
-          </Text>
-
-          <Text>
-            {formatDate(bookStats.createdAt)}
-          </Text>
-
+        <div className="dashboard-section" >
+          <h2 style={{textAlign: "center"}}>Reservas y Usuarios Únicos</h2>
+          <ReactEcharts option={pieChartOptions} className="chart-container" />
         </div>
 
-        <div style={{ width: '40%', marginBottom: '20px', padding: '15px', borderRadius: '8px', border: '1px solid #ddd' }}>
-          <h2>Reservas y Usuarios Únicos</h2>
-          <ReactEcharts option={pieChartOptions} style={{ height: '300px', width: '100%' }} />
+        <div className="dashboard-section">
+          <h2 style={{textAlign: "center"}}>Estadísticas de Reserva</h2>
+          <div className="text-content">
+            <Text strong>Ultima Reserva: </Text><Text>{formatDate(bookStats.lastReservation)}</Text>
+            <Text strong>Ultimo en Reservar: </Text><Text>{bookStats.lastReservationUser}</Text>
+            <Text strong>Estado Actual: </Text><Text>{bookStats.currentReservation ? 'Sí' : 'No'}</Text>
+            <Text strong>Reservaciones en camino: </Text><Text>{bookStats.upcomingReservationsCount}</Text>
+            <Text strong>Duracion promedio: </Text><Text>{formatAverageDuration(bookStats.averageReservationDurationHours)} horas</Text>
+          </div>
+        
         </div>
 
-        <div style={{ width: '40%', marginBottom: '20px', padding: '15px', borderRadius: '8px' }}>
-          <h2>Estadísticas de Reserva</h2>
-          <Text>
-            {formatDate(bookStats.lastReservation)}
-          </Text>
-
-          <Text>
-            {bookStats.lastReservationUser}
-          </Text>
-
-          <Text>
-            {bookStats.currentReservation ? 'Sí' : 'No'}
-          </Text>
-
-          {renderStatistic('Reservas Futuras', bookStats.upcomingReservationsCount)}
-          {renderStatistic('Duración Promedio de Reserva', bookStats.averageReservationDurationHours, ' horas')}
-        </div>
-
-        <div style={{ width: '40%', marginBottom: '20px', padding: '15px', borderRadius: '8px' }}>
-          <h2>Usuario Más Frecuente</h2>
+        <div className="dashboard-section">
+          <h2 style={{textAlign: "center"}}>Usuario Más Frecuente</h2>
           {bookStats.mostFrequentUser.userId ? (
             <>
-              <Text>
-                {bookStats.mostFrequentUser.name}
-              </Text>
-              {renderStatistic('Número de Reservas', bookStats.mostFrequentUser.reservationCount)}
+              <div className="text-content">
+              <Text strong>{bookStats.mostFrequentUser.name}</Text>
+              <Text>Número de Reservas: {bookStats.mostFrequentUser.reservationCount}</Text>
+              </div>
             </>
           ) : (
             <p>No hay datos disponibles para el usuario más frecuente</p>
           )}
+        </div>
         </div>
       </div>
     </div>

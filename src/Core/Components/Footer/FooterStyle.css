@@ -5,11 +5,15 @@
     margin: 0 auto;
     border-radius: 5px;
     margin-top: 2rem;
+    padding: 1% 0% 0.5%;
+    margin-bottom: 20px
 }
 .Descripcion{
     color: white;
-    font-weight: bold;
+    font-weight: default;
     justify-content: center;
     align-items: center;
     display: flex;
+    margin-bottom: 0.1px;
+    margin-top: 0.1px;
 }
