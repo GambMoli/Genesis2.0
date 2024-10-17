@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import { Login, Home, TablaHistorialBiblioteca } from './Modules';
+import { Login, Home } from './Modules';
 import { Header, Footer } from './Core/Components';
 import { EspaciosStudent, EspaciosAdmin } from './Modules/Espacios';
 import { Biblioteca } from './Modules';
 import { Excusas } from './Modules';
 import { ExcusasAdmin } from './Modules';
 import { Pasantias } from './Modules';
+import {BibliotecaHistorialAdmin,TablaHistorialBiblioteca} from './Modules/TablaReservaBiblioteca'
+import { Dashboard } from './Core/Components';
+
 
 
 const App: React.FC = () => {
@@ -63,6 +66,18 @@ const App: React.FC = () => {
       return <Navigate to="/" />;
     }
   };
+  const   BibliotecaRoute = () => {
+    const currentRole = getUserRoleFromLocalStorage();
+    if (currentRole === "Administrativo") {
+      return <BibliotecaHistorialAdmin />;
+    } else if (currentRole) {
+      return <TablaHistorialBiblioteca />;
+    } else {
+      return <Navigate to="/" />;
+    }
+  };
+
+ 
 
   return (
     <Router>
@@ -74,7 +89,8 @@ const App: React.FC = () => {
         <Route path="/Espacios" element={<EspaciosRoute />} />
         <Route path="/Excusas" element={<ExcusasRoute />} />
         <Route path="/Pasantias" element={<Pasantias />} />
-        <Route path="/HistorialBiblioteca" element={<TablaHistorialBiblioteca />} />
+        <Route path="/HistorialBiblioteca" element={<BibliotecaRoute />} />
+        <Route path="/Dashboard" element={<Dashboard />} />
       </Routes>
       <Footer />
     </Router>

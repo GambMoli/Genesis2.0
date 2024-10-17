@@ -1,0 +1,24 @@
+/* EspaciosAdmin.css */
+.row-aceptado {
+    background-color: #f6ffed;
+  }
+  
+  .row-pendiente {
+    background-color: #fffbe6;
+  }
+  
+  .row-rechazado {
+    background-color: #fff2f0;
+  }
+  
+  .row-cancelado {
+    background-color: rgb(255, 244, 223);
+  }
+  
+  /* Hover styles */
+  .row-aceptado:hover td,
+  .row-pendiente:hover td,
+  .row-rechazado:hover td,
+  .row-cancelada:hover td {
+    background-color: #e6f7ff !important;
+  }

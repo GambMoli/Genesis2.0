@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Table, Button, message, Tooltip } from "antd";
 import { getReserva, ReservaResponse, ApiResponse } from "../../Services/ModulesRequest/LoginRequest";
 import { format } from 'date-fns';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { EditOutlined, StopOutlined } from '@ant-design/icons';
 import './styleInformacion.css';
 import { SpinnerApp } from "../Spinner";
 import { changeStatus } from "../../Services/ModulesRequest/EspaciosRequest";
@@ -159,7 +159,7 @@ export const InformacionReserva: React.FC<{ onEdit: (reservaId: number) => void 
             <Tooltip title={isCancelDisabled ? "No se puede cancelar" : "Cancelar"}>
               <Button
                 type="primary"
-                icon={<DeleteOutlined />}
+                icon={<StopOutlined />}
                 onClick={() => handleDelete(record.reservaId)}
                 disabled={isCancelDisabled}
                 danger

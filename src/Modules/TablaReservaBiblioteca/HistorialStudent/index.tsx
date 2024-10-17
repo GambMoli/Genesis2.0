@@ -1,5 +1,5 @@
 import React from 'react';
-import { HistorialReservacionesBiblioteca } from '../../Core';
+import { HistorialReservacionesBiblioteca } from '../../../Core';
 
 export const TablaHistorialBiblioteca: React.FC = () => {
   const handleEdit = (reservaId: number) => {

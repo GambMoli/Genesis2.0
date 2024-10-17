@@ -4,9 +4,9 @@ import React, { useState, useEffect } from 'react';
 import { Input, Button, Typography, Row, Col, Card, Space, Pagination, message } from 'antd';
 import { FilePdfOutlined } from '@ant-design/icons';
 import './BibliotecaStyle.css';
-import { Reserva } from '../../Core/Components/ModalReserva';
-import { getBooks } from '../../Core/Services/ModulesRequest/BibliotecaRequest';
-import { SpinnerApp } from '../../Core/Components/Spinner';
+import { Reserva } from '../../../Core/Components/ModalReserva';
+import { getBooks} from '../../../Core/Services/ModulesRequest/BibliotecaRequest';
+import { SpinnerApp } from '../../../Core/Components/Spinner';
 import { useNavigate } from 'react-router-dom';
 
 const { Search } = Input;
@@ -22,17 +22,36 @@ interface Book {
   disponible: number;
 }
 
+interface User {
+  username: string;
+  role: string;
+  id: number;
+}
+
 export const Biblioteca: React.FC = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Hook de navegación
   const [books, setBooks] = useState<Book[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalBooks, setTotalBooks] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [userRole, setUserRole] = useState<string>(''); // Almacenar el rol del usuario
   const pageSize = 8;
 
   useEffect(() => {
     fetchBooks();
   }, [currentPage]);
+
+  useEffect(() => {
+    const userString = localStorage.getItem('user');
+    if (userString) {
+      try {
+        const user: User = JSON.parse(userString);
+        setUserRole(user.role); // Guardar el rol del usuario
+      } catch (error) {
+        console.error('Error parsing user data from localStorage:', error);
+      }
+    }
+  }, []);
 
   const fetchBooks = async () => {
     setLoading(true);
@@ -54,8 +73,13 @@ export const Biblioteca: React.FC = () => {
   };
 
   const navigateHistorial = () => {
-    navigate('/HistorialBiblioteca')
-  }
+    navigate('/HistorialBiblioteca');
+  };
+
+  const handleStatisticsClick = (bookId: number) => {
+    // Aquí navegas al Dashboard, pasando el bookId como parámetro en la URL si es necesario
+    navigate(`/dashboard?bookId=${bookId}`);
+  };
 
   return (
     <div className='MainContainerBiblioteca'>
@@ -69,7 +93,12 @@ export const Biblioteca: React.FC = () => {
           />
         </div>
         <div className='Reservas'>
-          <Button type="primary" size="large" style={{ backgroundColor: '#28537e' }} onClick={navigateHistorial}>Ver Historial</Button>
+        {userRole === 'Profesor' ? (
+          <div></div>
+           ) : (
+              <Button type="primary" size="large" style={{ backgroundColor: '#28537e' }} onClick={navigateHistorial}>Ver Historial</Button>
+          )}
+         
         </div>
       </div>
       <div className='Libros'>
@@ -90,7 +119,14 @@ export const Biblioteca: React.FC = () => {
                     <Space direction="vertical" size="small" className="book-content">
                       <Title level={4}>{book.nombre}</Title>
                       <Text>{book.autor}</Text>
-                      <Reserva bookId={book.id} />
+                      
+                      {userRole === 'Profesor' ? (
+                        <Button onClick={() => handleStatisticsClick(book.id)} type="primary">
+                          Ver Estadísticas
+                        </Button>
+                      ) : (
+                        <Reserva bookId={book.id} />
+                      )}
                       <Text type="secondary" className="pdf-availability">
                         {book.pdf_blob ? (
                           <Link href={book.pdf_blob} target="_blank" rel="noopener noreferrer">

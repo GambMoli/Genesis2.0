@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'; 
 import { Table, Button, message, Typography, Pagination } from 'antd';
 import { CheckOutlined, StopOutlined, CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
-import { changeStatus, getListReservas } from "../../../Core/Services/ModulesRequest/EspaciosRequest";
+
 import { SpinnerApp } from '../../../Core/Components/Spinner';
 import { ModalMessage } from '../../../Core/Components/ModalMessage';
-import './StyleAdmin.css';
-
+import { getallReservations,updateReserveStatus} from '../../../Core/Services/ModulesRequest/BibliotecaRequest';
+getallReservations
 const { Title } = Typography;
 
 interface Reserva {
   reservaId: number;
-  spaceName: string;
-  userName: string;
-  startDate: string;
-  endDate: string;
-  reason: string;
-  status: string;
+  libro_nombre: string;
+  libro_autor: string;
+  fecha_inicio: string;
+  fecha_fin: string;
+  estado: string;
+  status?: string;
 }
 
 interface PaginatedData {
@@ -26,12 +26,10 @@ interface PaginatedData {
   data: Reserva[];
 }
 
-interface ApiResponse {
-  success: boolean;
-  data: PaginatedData;
-}
 
-export const EspaciosAdmin: React.FC = () => {
+
+
+export const BibliotecaHistorialAdmin: React.FC = () => {
   const [reservas, setReservas] = useState<PaginatedData>({
     totalItems: 0,
     currentPage: 1,
@@ -51,10 +49,25 @@ export const EspaciosAdmin: React.FC = () => {
   const fetchReservas = async (page: number, pageSize: number) => {
     setLoading(true);
     try {
-      const response = await getListReservas(page, pageSize);
-      const typedResponse = response as ApiResponse;
-      if (typedResponse.success) {
-        setReservas(typedResponse.data);
+      const response = await getallReservations(page, pageSize);
+  
+      if (response.success) {
+        const formattedReservations = response.data.reservations.map((reservation: any) => ({
+          reservaId: reservation.reservaId,
+          libro_nombre: reservation.book.bookName,
+          libro_autor: reservation.book.bookAuthor,
+          fecha_inicio: reservation.startDate,
+          fecha_fin: reservation.endDate,
+          estado: reservation.status
+        }));
+  
+        setReservas({
+          currentPage: page, 
+          pageSize: pageSize, 
+          totalItems: response.data.totalItems,
+          totalPages: response.data.totalPages,
+          data: formattedReservations
+        });
       }
     } catch (error) {
       console.error("Error fetching reservas:", error);
@@ -63,11 +76,12 @@ export const EspaciosAdmin: React.FC = () => {
       setLoading(false);
     }
   };
+  
 
   const handleStatusChange = async () => {
     if (selectedReserva && modalConfig) {
       try {
-        await changeStatus(selectedReserva.reservaId, { newStatus: modalConfig.newStatus });
+        await updateReserveStatus(selectedReserva.reservaId, { status: modalConfig.newStatus });
         message.success(`Reservación ${modalConfig.newStatus.toLowerCase()}`);
         fetchReservas(reservas.currentPage, reservas.pageSize);
       } catch (error) {
@@ -79,26 +93,27 @@ export const EspaciosAdmin: React.FC = () => {
     }
   };
 
-  const showModal = (reserva: Reserva, newStatus: 'Aceptado' | 'Rechazado') => {
+  const showModal = (reserva: Reserva, status: 'activa' | 'finalizada') => {
     const config = {
-      Aceptado: {
-        title: "Confirmar aceptación",
-        message: "¿Estás seguro de aceptar esta reserva?",
+      activa: {
+        title: "Confirmar activación",
+        message: "¿Estás seguro de activar esta reserva?",
         icon: <CheckCircleOutlined style={{ fontSize: '48px', color: '#52c41a' }} />,
-        newStatus: 'Aceptado',
+        newStatus: 'activa',  
       },
-      Rechazado: {
-        title: "Confirmar rechazo",
-        message: "¿Estás seguro de rechazar esta reserva?",
+      finalizada: {
+        title: "Confirmar finalización",
+        message: "¿Estás seguro de finalizar esta reserva?",
         icon: <CloseCircleOutlined style={{ fontSize: '48px', color: '#f5222d' }} />,
-        newStatus: 'Rechazado por admin'
+        newStatus: 'finalizada',  
       }
-    }[newStatus];
-
+    }[status];
+  
     setModalConfig(config);
     setSelectedReserva(reserva);
     setModalVisible(true);
   };
+  
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -111,22 +126,36 @@ export const EspaciosAdmin: React.FC = () => {
   };
 
   const columns = [
-    { title: 'Espacio', dataIndex: 'spaceName', key: 'spaceName' },
-    { title: 'Nombre reservador', dataIndex: 'userName', key: 'userName' },
     {
-      title: 'Fecha de inicio',
-      dataIndex: 'startDate',
-      key: 'startDate',
-      render: (date: string) => formatDate(date)
+      title: 'Libro',
+      dataIndex: 'libro_nombre',
+      key: 'libro_nombre',
+      render: (text: string) => text, 
     },
     {
-      title: 'Fecha fin',
-      dataIndex: 'endDate',
-      key: 'endDate',
-      render: (date: string) => formatDate(date)
+      title: 'Autor',
+      dataIndex: 'libro_autor',
+      key: 'libro_autor',
+      render: (text: string) => text,
     },
-    { title: 'Razon', dataIndex: 'reason', key: 'reason' },
-    { title: 'Estado', dataIndex: 'status', key: 'status' },
+    {
+      title: 'Fecha de Inicio',
+      dataIndex: 'fecha_inicio',
+      key: 'fecha_inicio',
+      render: (text: string) => formatDate(text),
+    },
+    {
+      title: 'Fecha de Fin',
+      dataIndex: 'fecha_fin',
+      key: 'fecha_fin',
+      render: (text: string) => formatDate(text),
+    },
+    {
+      title: 'Estado',
+      dataIndex: 'estado',
+      key: 'estado',
+      render: (text: string) => text,
+    },
     {
       title: 'Acciones',
       key: 'actions',
@@ -135,30 +164,29 @@ export const EspaciosAdmin: React.FC = () => {
           <Button
             type="primary"
             icon={<CheckOutlined />}
-            onClick={() => showModal(record, 'Aceptado')}
-            disabled={record.status !== 'pendiente'}
+            onClick={() => showModal(record, 'activa')}
+            disabled={record.estado !== 'pendiente'}
             style={{ marginRight: 8 }}
           />
           <Button
             danger
             icon={<StopOutlined />}
-            onClick={() => showModal(record, 'Rechazado')}
-            disabled={record.status !== 'pendiente'}
+            onClick={() => showModal(record, 'finalizada')}
+            disabled={record.estado !== 'pendiente'}
           />
         </>
       ),
     },
   ];
-
   const rowClassName = (record: Reserva) => {
-    switch (record.status.toLowerCase()) {
-      case 'aceptado':
+    switch (record.estado.toLowerCase()) {  // Asegúrate de usar 'estado'
+      case 'activa':
         return 'row-aceptado';
       case 'pendiente':
         return 'row-pendiente';
-      case 'rechazado por admin':
+      case 'finalizada':
         return 'row-rechazado';
-      case 'cancelado':
+      case 'cancelada':
         return 'row-cancelado';
       case 'rechazado':
         return 'row-rechazado';
@@ -166,7 +194,7 @@ export const EspaciosAdmin: React.FC = () => {
         return '';
     }
   };
-
+  
   if (loading) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh' }}>
@@ -178,15 +206,15 @@ export const EspaciosAdmin: React.FC = () => {
   return (
     <div style={{ width: "80%", margin: "auto", padding: "20px" }}>
       <Title style={{ fontSize: "24px" }}>
-        Reservas de espacios
+        Reservas de Libros
       </Title>
       <>
         <Table
           columns={columns}
           dataSource={reservas.data}
           rowKey={(record) => record.reservaId}
+          rowClassName={rowClassName} 
           pagination={false}
-          rowClassName={rowClassName}
         />
         <Pagination
           total={reservas.totalItems}

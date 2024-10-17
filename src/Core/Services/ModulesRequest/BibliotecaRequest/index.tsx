@@ -55,10 +55,30 @@ export const GetHistorialReservaciones = async (id: number, page: number, pageSi
 };
 
 interface changeStatus {
-  newStatus: string
+  status: string
 }
 export const updateReserveStatus = async (id: number, data: changeStatus) => {
   const response = await PUT<changeStatus>(`/library/reservations/${id}`, data);
   return response;
 };
 
+interface dataReservation{
+  userId: number,
+  newStartDate: string,
+  newEndDate: string
+}
+
+export const modifyReserve = async (id: number, data:dataReservation )=> {
+  const response = await PUT<dataReservation>(`/library/reservations/${id}/modify`, data);
+  return response;
+}
+
+export const  getallReservations = async(page: number, pageSize: number ): Promise<ApiResponse>=>{
+  const response = await GET<ApiResponse>(`/library/all-reservations?page=${page}&pageSize=${pageSize}`); 
+  return response;
+}
+
+export const  getStadisticsReservation = async (libroId:number) =>{
+  const response = await GET(`/library/${libroId}/estadisticas`);
+  return response;
+}
