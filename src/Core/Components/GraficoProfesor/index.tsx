@@ -37,34 +37,27 @@ export const Dashboard = () => {
   };
 
 
-  const pieChartOptions = {
+  const barChartOptions = {
     title: {
-      text: '',
-      left: 'center'
+      text: 'Estadísticas de Reservas'
     },
     tooltip: {
-      trigger: 'item'
+      trigger: 'axis',
+      axisPointer: {
+        type: 'shadow'
+      }
     },
-    legend: {
-      orient: 'vertical',
-      left: 'left'
+    xAxis: {
+      type: 'category',
+      data: reservationData.map(item => item.name)
+    },
+    yAxis: {
+      type: 'value'
     },
     series: [
       {
-        name: 'Estadísticas',
-        type: 'pie',
-        radius: '50%',
-        data: reservationData.map(item => ({
-          value: item.value,
-          name: item.name,
-        })),
-        emphasis: {
-          itemStyle: {
-            shadowBlur: 10,
-            shadowOffsetX: 0,
-            shadowColor: 'rgba(0, 0, 0, 0.5)'
-          }
-        }
+        data: reservationData.map(item => item.value),
+        type: 'bar'
       }
     ]
   };
@@ -93,7 +86,7 @@ export const Dashboard = () => {
 
           <div className="dashboard-section" >
             <h2 style={{ textAlign: "center" }}>Reservas y Usuarios Únicos</h2>
-            <ReactEcharts option={pieChartOptions} className="chart-container" />
+            <ReactEcharts option={barChartOptions} className="chart-container" />
           </div>
 
           <div className="dashboard-section">
