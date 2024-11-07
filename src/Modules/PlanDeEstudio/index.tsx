@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Card, Progress, Table, Button, Typography, Collapse } from 'antd';
+import React from 'react';
+import { Card, Progress, Table, Typography, Collapse } from 'antd';
 import { CaretRightOutlined } from '@ant-design/icons';
 import "./PlanStyle.css";
 
@@ -145,7 +145,7 @@ const PlanDeEstudio: React.FC = () => {
       courses: [
         { code: '13935', name: 'GESTION DE ADQUISICION E INTEGRACION DE TECNOLOGIA', credits: 3, ht: 3, hp: 0 },
         { code: '13919', name: 'FORMACION PARA EMPRENDIMIENTO II', credits: 3, ht: 3, hp: 0 }
-        ]
+      ]
     }
   ]
 
@@ -237,7 +237,7 @@ const PlanDeEstudio: React.FC = () => {
     <div className="main-container-plan">
       <Card>
         <Title level={2}>Plan de estudio</Title>
-        
+
         <div style={{ marginBottom: 24 }}>
           <div style={{ marginBottom: 8 }}>
             <span style={{ fontWeight: 500 }}>Progreso: </span>
@@ -247,20 +247,20 @@ const PlanDeEstudio: React.FC = () => {
           <Progress percent={progressPercentage} showInfo={false} strokeColor="#1890ff" />
         </div>
 
-        <Table 
-          columns={creditColumns} 
+        <Table
+          columns={creditColumns}
           dataSource={creditData}
           pagination={false}
           bordered
           style={{ marginBottom: 24 }}
         />
 
-        <Collapse 
+        <Collapse
           accordion
           expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
         >
           {semesters.map((semester) => (
-            <Panel 
+            <Panel
               header={`Semestre ${semester.number}, Créditos ${semester.credits}`}
               key={semester.number}
             >

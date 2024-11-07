@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react';
-import { Input, Button, Typography, Card, Table, Modal, Form, DatePicker, message } from 'antd';
+import { Input, Button, Typography, Card, Table, Modal, Form, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
 const { Title } = Typography;
@@ -87,8 +88,8 @@ export const PasantiasAdmin: React.FC = () => {
       salario: values.salario,
       empresa: values.empresa,
       estado: 'pendiente',
-      fecha_postulacion: new Date() .toLocaleDateString(),
-      nombre_usuario: 'Luis Vergel', 
+      fecha_postulacion: new Date().toLocaleDateString(),
+      nombre_usuario: 'Luis Vergel',
     };
 
     setInternships([...internships, newInternship]);
