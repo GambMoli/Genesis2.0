@@ -145,32 +145,38 @@ export const ExcusasAdmin: React.FC = () => {
       title: 'Nombre',
       dataIndex: 'nombre_completo',
       key: 'nombre_completo',
+      width: '10%', // Ajusta el porcentaje según el espacio necesario
     },
     {
       title: 'Documento',
       dataIndex: 'documento',
       key: 'documento',
+      width: '15%',
     },
     {
       title: 'Razón',
       dataIndex: 'razon_falta',
       key: 'razon_falta',
+      width: '15%',
     },
     {
       title: 'Fecha',
       dataIndex: 'fecha_falta',
       key: 'fecha_falta',
+      width: '15%',
       render: (date: string) => new Date(date).toLocaleDateString(),
     },
     {
       title: 'Estado',
       dataIndex: 'estado',
       key: 'estado',
+      width: '10%',
       render: (estado: number) => getEstadoText(estado),
     },
     {
       title: 'Acciones',
       key: 'acciones',
+      width: '35%', // Más espacio para la columna de Acciones
       render: (_: unknown, record: ExcusaData) => (
         <>
           <Button
@@ -201,6 +207,7 @@ export const ExcusasAdmin: React.FC = () => {
       ),
     },
   ];
+
 
   return (
     <div className="MainContainerAdminExcusas">

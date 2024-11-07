@@ -47,15 +47,16 @@ export const Excusas: React.FC = () => {
   const getEstadoText = (estado: number): string => {
     switch (estado) {
       case 0:
-        return 'En espera';
+        return 'Pendiente';
       case 1:
-        return 'Validada';
-      case 2:
         return 'Rechazada';
+      case 2:
+        return 'Aprobada';
       default:
-        return 'En espera';
+        return 'Pendiente';
     }
   };
+
 
   const columns = [
     {
