@@ -1,12 +1,12 @@
-/* Contenedor principal */
+
 .ContenedorPrincipal {
   display: flex;
-  flex-direction: row; /* Alinea los elementos en fila */
-  justify-content: space-between; /* Asegura que las secciones estén distribuidas uniformemente */
-  align-items: flex-start; /* Alinea los elementos al inicio */
+  flex-direction: row; 
+  justify-content: space-between;
+  align-items: flex-start; 
   background-color: #f2f2f2;
   margin-top: 20px;
-  width: 100%; /* Ajusta el ancho del contenedor principal */
+  width: 100%; 
   margin: auto;
   gap:10px;
 }
@@ -23,7 +23,7 @@
   
 }
 
-/* Ajuste para los botones */
+
 .botonesSuperior, .botonesInferior {
   display: flex;
   width: 100%;
@@ -31,7 +31,7 @@
   padding: 10px;
 }
 
-/* Usa min-width para evitar que los botones sean demasiado pequeños */
+
 .botonesSuperior .ant-col, .botonesInferior .ant-col {
   display: flex;
   justify-content: center;
@@ -40,7 +40,7 @@
   padding: 10px;
 }
 
-/* Contenedor de la tabla y las noticias */
+
 .SeccionContainer {
   width: 42%;
   display: flex;
@@ -49,7 +49,7 @@
   
 }
 
-/* Sección Tabla */
+
 .SeccionTabla {
   color: #28537e;
   background-color: white;
@@ -57,9 +57,9 @@
   border-radius: 8px;
 }
 
-/* Sección Noticias */
+
 .SeccionNoticias {
-  
+
   color: #28537e;
 }
 

@@ -1,0 +1,13 @@
+.main-container-horario {
+    width: 80%;
+    margin: auto;
+    margin-top: 2rem;
+  }
+  
+  .ant-table-cell {
+    width: 150px; 
+    vertical-align: middle;
+    margin:auto;
+  }
+
+  
