@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react'; 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useState, useEffect } from 'react';
 import { Table, Button, message, Typography, Pagination } from 'antd';
 import { CheckOutlined, StopOutlined, CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 
 import { SpinnerApp } from '../../../Core/Components/Spinner';
 import { ModalMessage } from '../../../Core/Components/ModalMessage';
-import { getallReservations,updateReserveStatus} from '../../../Core/Services/ModulesRequest/BibliotecaRequest';
-getallReservations
+import { getallReservations, updateReserveStatus } from '../../../Core/Services/ModulesRequest/BibliotecaRequest';
+
 const { Title } = Typography;
 
 interface Reserva {
@@ -50,7 +51,7 @@ export const BibliotecaHistorialAdmin: React.FC = () => {
     setLoading(true);
     try {
       const response = await getallReservations(page, pageSize);
-  
+
       if (response.success) {
         const formattedReservations = response.data.reservations.map((reservation: any) => ({
           reservaId: reservation.reservaId,
@@ -60,10 +61,10 @@ export const BibliotecaHistorialAdmin: React.FC = () => {
           fecha_fin: reservation.endDate,
           estado: reservation.status
         }));
-  
+
         setReservas({
-          currentPage: page, 
-          pageSize: pageSize, 
+          currentPage: page,
+          pageSize: pageSize,
           totalItems: response.data.totalItems,
           totalPages: response.data.totalPages,
           data: formattedReservations
@@ -76,7 +77,7 @@ export const BibliotecaHistorialAdmin: React.FC = () => {
       setLoading(false);
     }
   };
-  
+
 
   const handleStatusChange = async () => {
     if (selectedReserva && modalConfig) {
@@ -99,21 +100,21 @@ export const BibliotecaHistorialAdmin: React.FC = () => {
         title: "Confirmar activación",
         message: "¿Estás seguro de activar esta reserva?",
         icon: <CheckCircleOutlined style={{ fontSize: '48px', color: '#52c41a' }} />,
-        newStatus: 'activa',  
+        newStatus: 'activa',
       },
       finalizada: {
         title: "Confirmar finalización",
         message: "¿Estás seguro de finalizar esta reserva?",
         icon: <CloseCircleOutlined style={{ fontSize: '48px', color: '#f5222d' }} />,
-        newStatus: 'finalizada',  
+        newStatus: 'finalizada',
       }
     }[status];
-  
+
     setModalConfig(config);
     setSelectedReserva(reserva);
     setModalVisible(true);
   };
-  
+
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -130,7 +131,7 @@ export const BibliotecaHistorialAdmin: React.FC = () => {
       title: 'Libro',
       dataIndex: 'libro_nombre',
       key: 'libro_nombre',
-      render: (text: string) => text, 
+      render: (text: string) => text,
     },
     {
       title: 'Autor',
@@ -194,7 +195,7 @@ export const BibliotecaHistorialAdmin: React.FC = () => {
         return '';
     }
   };
-  
+
   if (loading) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh' }}>
@@ -213,7 +214,7 @@ export const BibliotecaHistorialAdmin: React.FC = () => {
           columns={columns}
           dataSource={reservas.data}
           rowKey={(record) => record.reservaId}
-          rowClassName={rowClassName} 
+          rowClassName={rowClassName}
           pagination={false}
         />
         <Pagination
