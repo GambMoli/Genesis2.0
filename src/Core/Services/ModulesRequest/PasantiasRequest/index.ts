@@ -24,6 +24,23 @@ export const getAllInterships = async (page: number, pageSize: number): Promise<
     return null;
   }
 };
+
+export const getAllPasantiasUser = async (id: number, page: number, pageSize: number): Promise<PasantiaResponse | null> => {
+  try {
+    const response = await GET(`/usuarios/${id}/pasantias-disponibles?page=${page}&pageSize=${pageSize}`);
+    return response as PasantiaResponse;
+  } catch (error) {
+    console.error("Error fetching internships:", error);
+    return null;
+  }
+};
+
+export const getAllPostulacionesByUser = async (id: number, page: number, pageSize: number) => {
+  const response = await GET(`/usuarios/${id}/postulaciones?page=${page}&pageSize=${pageSize}`)
+  return response;
+}
+
+
 // Función que postula a una pasantía
 export const PostularPasantia = async (id: number, usuarioId: number): Promise<PasantiaResponse | null> => {
   try {

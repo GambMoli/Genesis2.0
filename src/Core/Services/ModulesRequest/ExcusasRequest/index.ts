@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { POST, GET } from "../../request";
+import { POST, GET, PUT } from "../../request";
 
 export const getAllExcusas = async (page: number, pageSize: number) => {
   const response = GET(`/excusas?page=${page}&pageSize=${pageSize}`)
@@ -30,6 +30,11 @@ export const PostDocuments = async (documento: File) => {
   }
 };
 
+export const ChangeStatusExcusa = async (id: number, data: any) => {
+  const response = PUT(`/excusas/${id}/estado`, data)
+  return response
+}
+
 export const getDocument = async (id: number) => {
   const response = GET(`/documentos/${id}`)
   return response
@@ -38,4 +43,9 @@ export const getDocument = async (id: number) => {
 export const createExcusa = async (data: any) => {
   const response = await POST('/excusas', data);
   return response;
+}
+
+export const getUserById = async (id: number) => {
+  const response = GET(`/users/${id}`)
+  return response
 }
