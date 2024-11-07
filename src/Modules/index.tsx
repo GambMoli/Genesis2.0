@@ -6,4 +6,6 @@ export * from './ExcusasAdmin'
 export * from './Pasantias'  
 export * from './TablaReservaBiblioteca'
 export * from './PasantiasAdmin'
+export * from './PlanDeEstudio'
+export * from './Horario'
 

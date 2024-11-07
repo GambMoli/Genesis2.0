@@ -1,0 +1,13 @@
+.main-container-plan {
+    width: 80%;
+    margin: auto;
+    margin-top: 2rem;
+  }
+  .custom-table {
+    width: 100%;
+  }
+  .ant-table-tbody > tr > td {
+    padding-top: 1px;   /* Ajusta el espacio superior */
+    padding-bottom: 1px;
+    line-height: 1;     
+  }

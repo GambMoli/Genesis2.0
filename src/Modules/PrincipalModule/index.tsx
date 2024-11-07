@@ -1,11 +1,18 @@
 import React from 'react';
 import { Row, Col, Card, Badge, Typography } from 'antd';
-import { ReadOutlined, ProductOutlined, BookOutlined, MedicineBoxOutlined, SearchOutlined } from '@ant-design/icons';
+import { 
+  ReadOutlined, 
+  ProductOutlined, 
+  BookOutlined, 
+  MedicineBoxOutlined, 
+  SearchOutlined,
+  ClockCircleOutlined,
+  ScheduleOutlined 
+} from '@ant-design/icons';
 import './StylePrincipalPage.css';
 import { BotonesModulos } from '../../Core/Components/BotonesModulos';
 import { TablaInformacion } from '../../Core/Components/TablaPrincipalPage';
 import { useNavigate } from 'react-router-dom';
-
 
 const { Paragraph } = Typography;
 export const Home: React.FC = () => {
@@ -13,7 +20,6 @@ export const Home: React.FC = () => {
 
   return (
     <>
-
       <div className='MainContainer'>
         <Row className="ContenedorPrincipal">
           <Row className="SeccionBotones">
@@ -26,7 +32,7 @@ export const Home: React.FC = () => {
               </Col>
             </Row>
 
-            <Row className="botonesInferior" justify="start"> {/* Gutter reducido */}
+            <Row className="botonesInferior" justify="start">
               <Col span={12}>
                 <BotonesModulos icon={<MedicineBoxOutlined className="iconsCustom" />} text="Excusas médicas" onClick={() => navigate('/Excusas')} />
               </Col>
@@ -34,12 +40,18 @@ export const Home: React.FC = () => {
                 <BotonesModulos icon={<SearchOutlined className="iconsCustom" />} text="Pasantías" onClick={() => navigate('/Pasantias')} />
               </Col>
             </Row>
+
+            <Row className="botonesInferior" justify="start">
+              <Col span={12}>
+                <BotonesModulos icon={<ClockCircleOutlined className="iconsCustom" />} text="Horario" onClick={() => navigate('/Horario')} />
+              </Col>
+              <Col span={12}>
+                <BotonesModulos icon={<ScheduleOutlined className="iconsCustom" />} text="Plan de Estudio" onClick={() => navigate('/PlanDeEstudio')} />
+              </Col>
+            </Row>
           </Row>
 
-
-
           {/* Sección de Tabla */}
-
           <Row className="SeccionContainer">
             <Col span={24} className="SeccionTabla">
               <Paragraph className='ParrafoTabla'>Información académica</Paragraph>
@@ -61,14 +73,8 @@ export const Home: React.FC = () => {
               </Card>
             </Col>
           </Row>
-
         </Row>
       </div>
-
     </>
-
-
-
-
   );
 };
