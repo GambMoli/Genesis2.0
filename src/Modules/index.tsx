@@ -5,4 +5,5 @@ export * from './Excusas'
 export * from './ExcusasAdmin'
 export * from './Pasantias'  
 export * from './TablaReservaBiblioteca'
+export * from './PasantiasAdmin'
 
