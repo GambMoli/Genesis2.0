@@ -7,7 +7,9 @@ import {
   MedicineBoxOutlined, 
   SearchOutlined,
   ClockCircleOutlined,
-  ScheduleOutlined 
+  ScheduleOutlined,
+  FileTextOutlined,
+  FormOutlined // New icon for Matricula
 } from '@ant-design/icons';
 import './StylePrincipalPage.css';
 import { BotonesModulos } from '../../Core/Components/BotonesModulos';
@@ -15,6 +17,7 @@ import { TablaInformacion } from '../../Core/Components/TablaPrincipalPage';
 import { useNavigate } from 'react-router-dom';
 
 const { Paragraph } = Typography;
+
 export const Home: React.FC = () => {
   const navigate = useNavigate();
 
@@ -24,29 +27,67 @@ export const Home: React.FC = () => {
         <Row className="ContenedorPrincipal">
           <Row className="SeccionBotones">
             <Row className="botonesSuperior" justify="start">
-              <Col span={12}>
-                <BotonesModulos icon={<ProductOutlined className="iconsCustom" />} text="Espacios" onClick={() => navigate('/Espacios')} />
+              <Col span={8}>
+                <BotonesModulos 
+                  icon={<ProductOutlined className="iconsCustom" />} 
+                  text="Espacios" 
+                  onClick={() => navigate('/Espacios')} 
+                />
               </Col>
-              <Col span={12}>
-                <BotonesModulos icon={<BookOutlined className="iconsCustom" />} text="Biblioteca" onClick={() => navigate('/Biblioteca')} />
+              <Col span={8}>
+                <BotonesModulos 
+                  icon={<BookOutlined className="iconsCustom" />} 
+                  text="Biblioteca" 
+                  onClick={() => navigate('/Biblioteca')} 
+                />
+              </Col>
+              <Col span={8}>
+                <BotonesModulos 
+                  icon={<FileTextOutlined className="iconsCustom" />} 
+                  text="Notas y Asistencias" 
+                  onClick={() => navigate('/Notasist')} 
+                />
               </Col>
             </Row>
 
             <Row className="botonesInferior" justify="start">
-              <Col span={12}>
-                <BotonesModulos icon={<MedicineBoxOutlined className="iconsCustom" />} text="Excusas médicas" onClick={() => navigate('/Excusas')} />
+              <Col span={8}>
+                <BotonesModulos 
+                  icon={<MedicineBoxOutlined className="iconsCustom" />} 
+                  text="Excusas médicas" 
+                  onClick={() => navigate('/Excusas')} 
+                />
               </Col>
-              <Col span={12}>
-                <BotonesModulos icon={<SearchOutlined className="iconsCustom" />} text="Pasantías" onClick={() => navigate('/Pasantias')} />
+              <Col span={8}>
+                <BotonesModulos 
+                  icon={<SearchOutlined className="iconsCustom" />} 
+                  text="Pasantías" 
+                  onClick={() => navigate('/Pasantias')} 
+                />
+              </Col>
+              <Col span={8}>
+                <BotonesModulos 
+                  icon={<ClockCircleOutlined className="iconsCustom" />} 
+                  text="Horario" 
+                  onClick={() => navigate('/Horario')} 
+                />
               </Col>
             </Row>
 
             <Row className="botonesInferior" justify="start">
-              <Col span={12}>
-                <BotonesModulos icon={<ClockCircleOutlined className="iconsCustom" />} text="Horario" onClick={() => navigate('/Horario')} />
+              <Col span={8}>
+                <BotonesModulos 
+                  icon={<ScheduleOutlined className="iconsCustom" />} 
+                  text="Plan de Estudio" 
+                  onClick={() => navigate('/PlanDeEstudio')} 
+                />
               </Col>
-              <Col span={12}>
-                <BotonesModulos icon={<ScheduleOutlined className="iconsCustom" />} text="Plan de Estudio" onClick={() => navigate('/PlanDeEstudio')} />
+              <Col span={8}>
+                <BotonesModulos 
+                  icon={<FormOutlined className="iconsCustom" />} 
+                  text="Matrícula" 
+                  onClick={() => navigate('/Matricular')} 
+                />
               </Col>
             </Row>
           </Row>

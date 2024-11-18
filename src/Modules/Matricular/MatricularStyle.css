@@ -1,0 +1,77 @@
+.main-container-matricular {
+    width: 80%;
+    margin: auto;
+    margin-top: 2rem;
+  }
+  
+  .enrollment-header {
+    background-color: #fff;
+    padding: 1%;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+  }
+  
+  .enrollment-summary {
+    margin-top: 1rem;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .enrollment-summary th {
+    background-color: #003366;
+    color: white;
+    padding: 0.75rem;
+    text-align: center;
+    border: 1px solid #ddd;
+    font-size: 12px; /* Cambia el tamaño de la fuente */
+  }
+  
+  .enrollment-summary td {
+    padding: 0.75rem;
+    text-align: center;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    font-size: 12px; /* Cambia el tamaño de la fuente */
+  }
+  
+  
+  .courses-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+  
+  .course-card {
+    margin-bottom: 1rem;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+  
+  .course-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .course-info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  
+  .search-container {
+    margin-bottom: 1rem;
+  }
+  
+  .print-button {
+    margin-bottom: 1rem;
+  }
+  
+  .header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
