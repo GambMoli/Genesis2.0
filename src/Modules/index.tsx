@@ -8,4 +8,6 @@ export * from './TablaReservaBiblioteca'
 export * from './PasantiasAdmin'
 export * from './PlanDeEstudio'
 export * from './Horario'
+export * from './Notasist'
+export * from './Matricular'
 

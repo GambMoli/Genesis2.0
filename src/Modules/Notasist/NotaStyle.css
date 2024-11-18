@@ -1,0 +1,30 @@
+.main-container-notas {
+    width: 80%;
+    margin: auto;
+    margin-top: 2rem;
+  }
+  
+  .ant-table-cell {
+    width: 150px; 
+    vertical-align: middle;
+    margin:auto;
+  }
+
+  .custom-table .ant-table {
+    font-size: 13px; /* Ajusta el tamaño según tu preferencia */
+  }
+  
+  .custom-table .ant-table-thead > tr > th {
+    font-size: 14px; /* Tamaño de la fuente para los encabezados */
+    text-align: center; /* Centrar texto horizontalmente */
+    vertical-align: middle; /* Centrar texto verticalmente */
+  }
+  
+  .custom-table .ant-table-tbody > tr > td {
+    font-size: 14px; /* Tamaño de la fuente para las celdas */
+    text-align: center; /* Centrar texto horizontalmente */
+    vertical-align: middle; /* Centrar texto verticalmente */
+  }
+  
+
+  

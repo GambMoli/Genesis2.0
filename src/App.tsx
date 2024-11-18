@@ -12,6 +12,8 @@ import { Dashboard } from './Core/Components';
 import { PasantiasEmpresa } from './Modules/PasantiasEmpresa';
 import PlanDeEstudio from './Modules/PlanDeEstudio';
 import { Horario } from './Modules';
+import { Notasist } from './Modules/Notasist';
+import Matricular from './Modules/Matricular'
 
 const App: React.FC = () => {
   const getUserRoleFromLocalStorage = (): string | null => {
@@ -107,6 +109,9 @@ const App: React.FC = () => {
         <Route path="/Dashboard" element={<Dashboard />} />
         <Route path="/PlanDeEstudio" element={<PlanDeEstudio />} />
         <Route path="/Horario" element={<Horario />} />
+
+        <Route path="/Notasist" element={<Notasist />} />
+        <Route path="/Matricular" element={<Matricular />} />
 
       </Routes>
       <Footer />
