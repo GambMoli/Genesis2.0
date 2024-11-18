@@ -12,6 +12,7 @@ import { Dashboard } from './Core/Components';
 import { PasantiasAdmin } from './Modules';
 import PlanDeEstudio from './Modules/PlanDeEstudio';
 import { Horario } from './Modules';
+import { PasantiasEmpresa } from './Modules/PasantiasEmpresa';
 
 const App: React.FC = () => {
   const getUserRoleFromLocalStorage = (): string | null => {
@@ -55,6 +56,17 @@ const App: React.FC = () => {
     }
   };
 
+  const PasantiasRoute = () => {
+    const currentRole = getUserRoleFromLocalStorage();
+    if (currentRole === "Administrativo") {
+      return <PasantiasAdmin />;
+    } else if (currentRole === "Empresa") {
+      return <PasantiasEmpresa />;
+    } else {
+      return <Pasantias />;
+    }
+  };
+
   const ExcusasRoute = () => {
     const currentRole = getUserRoleFromLocalStorage();
     if (currentRole === "Administrativo") {
@@ -93,13 +105,12 @@ const App: React.FC = () => {
         <Route path="/Biblioteca" element={<BibliotecaRoute />} />
         <Route path="/Espacios" element={<EspaciosRoute />} />
         <Route path="/Excusas" element={<ExcusasRoute />} />
-        <Route path="/Pasantias" element={<Pasantias />} />
+        <Route path="/Pasantias" element={<PasantiasRoute />} />
         <Route path="/HistorialBiblioteca" element={<BibliotecaTabla />} />
         <Route path="/Dashboard" element={<Dashboard />} />
-        <Route path="/PasantiasAdmin" element={<PasantiasAdmin />} />
         <Route path="/PlanDeEstudio" element={<PlanDeEstudio />} />
         <Route path="/Horario" element={<Horario />} />
-        
+
       </Routes>
       <Footer />
     </Router>

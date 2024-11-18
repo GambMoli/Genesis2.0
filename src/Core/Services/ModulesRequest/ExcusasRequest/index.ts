@@ -14,9 +14,6 @@ export const getAllExcusasByStudent = async (id: number, page: number, pageSize:
 export const PostDocuments = async (documento: File) => {
   const formData = new FormData();
   formData.append('archivo', documento);
-  console.log('====================================');
-  console.log(documento);
-  console.log('====================================');
 
   const response = await fetch('https://genesis20backend-production.up.railway.app/api/documentos', {
     method: 'POST',
@@ -34,6 +31,7 @@ export const ChangeStatusExcusa = async (id: number, data: any) => {
   const response = PUT(`/excusas/${id}/estado`, data)
   return response
 }
+
 
 export const getDocument = async (id: number) => {
   const response = GET(`/documentos/${id}`)
