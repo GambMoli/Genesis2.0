@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.5.1",
+    "@react-google-maps/api": "^2.20.3",
     "antd": "^5.20.6",
     "crypto-js": "^4.2.0",
     "date-fns": "^4.1.0",
