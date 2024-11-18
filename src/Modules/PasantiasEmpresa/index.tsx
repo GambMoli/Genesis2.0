@@ -474,7 +474,7 @@ export const PasantiasEmpresa: React.FC = () => {
       </Modal>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
         <Title style={{ fontSize: "24px", margin: 0 }}>
-          Pasantías Disponibles
+          Pasantías
         </Title>
         <Button
           type="primary"

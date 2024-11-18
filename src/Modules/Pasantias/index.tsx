@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from 'react';
 import { Card, Button, Typography, Modal, message, Pagination, Upload } from 'antd';
 import { InfoCircleOutlined, EnvironmentOutlined, UploadOutlined } from '@ant-design/icons';
@@ -95,7 +94,7 @@ export const Pasantias: React.FC = () => {
       }
 
       const postulacionesResponse = await getAllPostulacionesByUser(user.id, currentPagePostulaciones, 10);
-      //@ts-ignore
+      //@ts-ignore //@ts-ignore
       if (postulacionesResponse && postulacionesResponse.success && postulacionesResponse.data) {
         //@ts-ignore
         setPostulaciones(postulacionesResponse.data.data);
@@ -133,6 +132,7 @@ export const Pasantias: React.FC = () => {
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFileChange = (info: any) => {
     if (info.file.status === 'done') {
       setSelectedFile(info.file.originFileObj);
@@ -212,24 +212,18 @@ export const Pasantias: React.FC = () => {
     return <SpinnerApp />;
   }
 
-  const getStatusColor = (status: string) => {
-    switch (status.toLowerCase()) {
-      case 'pendiente':
-        return '#FFB800'; // Yellow
-      case 'seleccionado':
-        return '#52C41A'; // Green
+  const getEstadoStyle = (estado: string): React.CSSProperties => {
+    switch (estado.toLowerCase()) {
       case 'rechazado':
-        return '#FF4D4F'; // Red
+        return { color: 'red', fontWeight: 'bold' };
+      case 'pendiente':
+        return { color: 'orange', fontWeight: 'bold' };
+      case 'seleccionado':
+        return { color: 'green', fontWeight: 'bold' };
       default:
-        return 'inherit';
+        return {};
     }
   };
-
-  const renderStatus = (status: string) => (
-    <Text strong style={{ color: getStatusColor(status) }}>
-      {status.charAt(0).toUpperCase() + status.slice(1)}
-    </Text>
-  );
 
 
   return (
@@ -278,7 +272,11 @@ export const Pasantias: React.FC = () => {
                 <br />
                 <Text strong>Salario:</Text> <Text>${postulacion.salario}</Text>
                 <br />
-                <Text strong>Estado:</Text> <Text>{renderStatus(postulacion.estado_postulacion)}</Text>
+                <Text strong>Estado:</Text>{' '}
+                <Text style={getEstadoStyle(postulacion.estado_postulacion)}>
+                  {postulacion.estado_postulacion}
+                </Text>
+
                 <br />
                 <Text strong>Fecha de postulación:</Text>
                 <Text>{new Date(postulacion.fecha_postulacion).toLocaleDateString()}</Text>
