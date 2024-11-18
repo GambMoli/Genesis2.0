@@ -7,7 +7,8 @@ import {
   MedicineBoxOutlined, 
   SearchOutlined,
   ClockCircleOutlined,
-  ScheduleOutlined 
+  ScheduleOutlined ,
+  FileDoneOutlined 
 } from '@ant-design/icons';
 import './StylePrincipalPage.css';
 import { BotonesModulos } from '../../Core/Components/BotonesModulos';
@@ -48,6 +49,12 @@ export const Home: React.FC = () => {
               <Col span={12}>
                 <BotonesModulos icon={<ScheduleOutlined className="iconsCustom" />} text="Plan de Estudio" onClick={() => navigate('/PlanDeEstudio')} />
               </Col>
+            </Row>
+            <Row className="botonesInferior" justify="start">
+              <Col span={12}>
+                <BotonesModulos icon={<FileDoneOutlined  className="iconsCustom" />} text="Recibo de matrícula" onClick={() => navigate('/ReciboMatricula')} />
+              </Col>
+              
             </Row>
           </Row>
 

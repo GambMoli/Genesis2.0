@@ -9,9 +9,10 @@ import { ExcusasAdmin } from './Modules';
 import { Pasantias } from './Modules';
 import { BibliotecaHistorialAdmin, TablaHistorialBiblioteca } from './Modules/TablaReservaBiblioteca';
 import { Dashboard } from './Core/Components';
-import { PasantiasAdmin } from './Modules';
+
 import PlanDeEstudio from './Modules/PlanDeEstudio';
 import { Horario } from './Modules';
+import { ReciboMatricula } from './Modules/ReciboMatricula';
 
 const App: React.FC = () => {
   const getUserRoleFromLocalStorage = (): string | null => {
@@ -96,10 +97,9 @@ const App: React.FC = () => {
         <Route path="/Pasantias" element={<Pasantias />} />
         <Route path="/HistorialBiblioteca" element={<BibliotecaTabla />} />
         <Route path="/Dashboard" element={<Dashboard />} />
-        <Route path="/PasantiasAdmin" element={<PasantiasAdmin />} />
         <Route path="/PlanDeEstudio" element={<PlanDeEstudio />} />
         <Route path="/Horario" element={<Horario />} />
-        
+        <Route path='/ReciboMatricula' element={<ReciboMatricula />}></Route>
       </Routes>
       <Footer />
     </Router>

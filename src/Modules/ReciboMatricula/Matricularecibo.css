@@ -1,0 +1,51 @@
+.TablaDerecha{
+    width: 80%;
+    background-color: white;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    
+}
+.informacionMatricula{
+    width: 30%;
+    
+    text-align: center;
+   padding: 35px 0px 30px 20px;
+   border-color: 1px solid black;
+}
+.informacionMatricula .ant-table-thead > tr > th {
+    font-weight: bold;
+    background-color: #28537e; 
+    text-align: center;       
+    color: #ffffff;           
+   
+  }
+.tablaAbajo{
+ width: 80%;
+    background-color: white;
+    margin: auto;
+    display: flex;
+    justify-content: right;
+    
+}
+.tablaAbajoEstado{
+    width: 80%;
+    background-color: white;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+h3 {
+    margin: auto;
+    width: 79%;
+    font-size: 30px;
+    
+    margin-top: 30px;
+    border: 1px solid rgb(175, 175, 175); 
+    text-align: center; 
+    padding: 10px; 
+   font-weight: normal;
+}
+
