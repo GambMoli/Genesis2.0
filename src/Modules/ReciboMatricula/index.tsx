@@ -168,7 +168,7 @@ export const ReciboMatricula: React.FC = () => {
           <h4>Estado:</h4><p>Activo</p>
           <Button><DownloadOutlined />Descargar recibo</Button>
         </div>
-
+    
       </div>
     </div>
   );
